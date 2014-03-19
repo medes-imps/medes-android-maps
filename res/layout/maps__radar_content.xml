@@ -23,7 +23,7 @@
     android:gravity="center_vertical"
     android:orientation="vertical" >
 
-    <org.imogene.android.radar.view.RadarView
+    <fr.medes.android.radar.view.RadarView
         android:id="@+id/maps__radar"
         android:layout_width="320dip"
         android:layout_height="320dip"

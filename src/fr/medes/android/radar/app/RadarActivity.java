@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package org.imogene.android.radar.app;
+package fr.medes.android.radar.app;
 
-import org.imogene.android.radar.view.RadarView;
 
 import android.app.Activity;
 import android.content.Context;
@@ -32,6 +31,7 @@ import android.view.Window;
 import android.widget.TextView;
 import fr.medes.android.maps.MapsConstants;
 import fr.medes.android.maps.R;
+import fr.medes.android.radar.view.RadarView;
 
 /**
  * Simple Activity wrapper that hosts a {@link RadarView}

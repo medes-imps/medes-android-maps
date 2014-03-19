@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.imogene.android.radar.view;
+package fr.medes.android.radar.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
