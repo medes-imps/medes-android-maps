@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- Menu strings -->
+    <string name="maps__menu_save">Save</string>
+    <string name="maps__menu_autozoom">Autozoom</string>
+    <string name="maps__menu_discard">"Discard"</string>
+
+    <!-- Coordinates viewer -->
+    <string name="maps__show_on_map">Show on a map</string>
+    <string name="maps__navto">Navigate to</string>
+    <string name="maps__navto_radar">Radar</string>
+
+    <!-- Coordinates providers -->
+    <string name="maps__gps">Gps</string>
+    <string name="maps__network">Network</string>
+    <string name="maps__best">Best available</string>
+    <string name="maps__map">Map</string>
+    <string name="maps__manual">Manual</string>
+    
+    <!-- Location From sensor strings -->
+    <string name="maps__obtaining_location">Obtaining current location</string>
+    <string name="maps__provider_disabled">Provider %s is disabled</string>
+
+    <!-- Radar strings -->
+    <string name="maps__scanning">"Scanning&#8230;"</string>
+    <string name="maps__menu_standard">Standard</string>
+    <string name="maps__menu_metric">Metric</string>
+
+    <!-- Map Activity strings -->
+    <string name="maps__map_ativity_title">Map Demo</string>
+    <string name="maps__set_mode_offline">Set to offline mode</string>
+    <string name="maps__set_mode_online">Set to online mode</string>
+    <string name="maps__set_mode_show_me">showing and tracking my current location</string>
+    <string name="maps__set_mode_hide_me">hiding my current location</string>
+
+    <!-- Resource proxy strings -->
+    <string name="maps__mapnik">"Mapnik"</string>
+    <string name="maps__cyclemap">"Cycle Map"</string>
+    <string name="maps__public_transport">"Public transport"</string>
+    <string name="maps__base">"OSM base layer"</string>
+    <string name="maps__topo">"Topographic"</string>
+    <string name="maps__hills">"Hills"</string>
+    <string name="maps__cloudmade_standard">"CloudMade (Standard tiles)"</string>
+    <string name="maps__cloudmade_small">"CloudMade (small tiles)"</string>
+    <string name="maps__mapquest_osm">"Mapquest"</string>
+    <string name="maps__mapquest_aerial">"Mapquest Aerial"</string>
+    <string name="maps__bing">"Bing"</string>
+    <string name="maps__fiets_nl">"OpenFietsKaart overlay"</string>
+    <string name="maps__base_nl">"Netherlands base overlay"</string>
+    <string name="maps__roads_nl">"Netherlands roads overlay"</string>
+    <string name="maps__unknown">"Unknown"</string>
+    <string name="maps__format_distance_meters">"%s m"</string>
+    <string name="maps__format_distance_kilometers">"%s km"</string>
+    <string name="maps__format_distance_miles">"%s mi"</string>
+    <string name="maps__format_distance_nautical_miles">"%s nm"</string>
+    <string name="maps__format_distance_feet">"%s ft"</string>
+    <string name="maps__online_mode">"Online mode"</string>
+    <string name="maps__offline_mode">"Offline mode"</string>
+    <string name="maps__my_location">"My location"</string>
+    <string name="maps__compass">"Compass"</string>
+    <string name="maps__map_mode">"Map mode"</string>
+
+    <!-- Pre-cache string -->
+    <string name="maps__offline_title">Pre-cache map area</string>
+    <string name="maps__offline_description">This will pre-cache the map area within the given area around the selected point.</string>
+    <string name="maps__offline_wait">This may take several minutes.</string>
+    <string name="maps__offline_percent">"%1$d %%"</string>
+    <string name="maps__offline_size">"%1$d / %2$d"</string>
+    <string name="maps__offline_zoommin">Zoom min</string>
+    <string name="maps__offline_zoommax">Zoom max</string>
+    <string name="maps__offline_area">Area</string>
+    <string name="maps__offline_zoom_error">The minimum zoom level must be lower than the maximum zoom level</string>
+    <string name="maps__offline_start">Start</string>
+    <string name="maps__offline_cancel">Cancel</string>
+    <string name="maps__offline_close">Close</string>
+    <string name="maps__offline_noPreCacheHelpText">To pre-cache an area of the map, long press on the center of the area you\'d like to save and then tap on the bubble.</string>
+    <string name="maps__offline_delete">Delete this pre-cached map ?</string>
+    <string name="maps__offline_text1">"%1$s min: %2$d max %3$d"</string>
+    <string name="maps__offline_text2">"N %1$.2f E %2$.2f S %3$.2f W %4$.2f"</string>
+
+</resources>
