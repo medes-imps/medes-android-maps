@@ -5,8 +5,6 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 
 public final class MapsConstants {
 
-	public static final String AUTHORITY = "fr.medes.android.maps";
-
 	public static final double DEFAULT_LATIUDE = 43.589390;
 	public static final double DEFAULT_LONGITUDE = 1.445196;
 	public static final double DEFAULT_NORTH = 43.589390;
@@ -90,28 +88,33 @@ public final class MapsConstants {
 	public static final String EXTRA_REFRESH_PRECACHE = "refreshPreCache";
 
 	/**
+	 * Authority for he GPS url.
+	 */
+	public static final String AUTHORITY = "fr.medes.android.maps";
+
+	/**
 	 * Mime type for gps coordinates.
 	 */
-	public static final String MIME_GPS = "vnd.imogene.%realProjectName%.maps/coordinates";
+	public static final String MIME_GPS = "vnd.fr.medes.android.maps/coordinates";
 
 	/**
 	 * Filter the available intents to ask for coordinates only using the sensor
 	 */
-	public static final String CATEGORY_GPS = "org.imogene.map.%realProjectName%.category.GPS";
+	public static final String CATEGORY_GPS = "fr.medes.android.maps.category.GPS";
 
 	/**
 	 * Filter the available intents to ask for coordinates from the best sensor available
 	 */
-	public static final String CATEGORY_BEST = "org.imogene.map.%realProjectName%.category.BEST";
+	public static final String CATEGORY_BEST = "fr.medes.android.maps.category.BEST";
 
 	/**
 	 * Filter the available intents to ask for coordinates from the network
 	 */
-	public static final String CATEGORY_NETWORK = "org.imogene.map.%realProjectName%.category.NETWORK";
+	public static final String CATEGORY_NETWORK = "fr.medes.android.maps.category.NETWORK";
 
 	/**
 	 * Filter the available intents to ask for coordinates picking a point on a map
 	 */
-	public static final String CATEGORY_MAP = "org.imogene.map.%realProjectName%.category.MAP";
+	public static final String CATEGORY_MAP = "fr.medes.android.maps.category.MAP";
 
 }
