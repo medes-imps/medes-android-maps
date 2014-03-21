@@ -40,7 +40,7 @@
     </FrameLayout>
 
     <RelativeLayout
-        android:id="@+id/ig_footer"
+        android:id="@+id/maps__footer"
         android:layout_width="fill_parent"
         android:layout_height="?android:attr/listPreferredItemHeight"
         android:layout_marginTop="1dip"
@@ -50,7 +50,7 @@
         android:visibility="gone" >
 
         <Button
-            android:id="@+id/ig_saveButton"
+            android:id="@+id/maps__saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -59,7 +59,7 @@
             android:text="@string/maps__menu_save" />
 
         <Button
-            android:id="@+id/ig_discardButton"
+            android:id="@+id/maps__discardButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
