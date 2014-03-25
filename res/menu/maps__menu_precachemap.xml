@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/maps__menu_map"
+        android:icon="@drawable/maps__ic_action_map"
+        android:showAsAction="ifRoom"
+        android:title="@string/maps__menu_map"/>
+
+</menu>

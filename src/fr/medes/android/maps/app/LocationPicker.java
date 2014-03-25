@@ -18,13 +18,6 @@ import fr.medes.android.maps.overlay.BubbleClickableOverlay;
 
 public class LocationPicker extends MapActivity {
 
-	private static final int MENU_AUTOZOOM_ID = 100;
-	private static final int MENU_SAVE_ID = 101;
-	private static final int MENU_MYLOCATION_ID = 102;
-	private static final int MENU_COMPASS_ID = 103;
-	private static final int MENU_MAPMODE_ID = 104;
-	private static final int MENU_OFFLINE_ID = 105;
-
 	private BubbleClickableOverlay mOverlay;
 
 	@Override
@@ -78,40 +71,14 @@ public class LocationPicker extends MapActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(Menu.NONE, MENU_SAVE_ID, Menu.NONE, R.string.maps__menu_save).setIcon(R.drawable.maps__ic_menu_save)
-				.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		menu.add(Menu.NONE, MENU_AUTOZOOM_ID, Menu.NONE, R.string.maps__menu_autozoom)
-				.setIcon(R.drawable.maps__ic_menu_autozoom).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		menu.add(Menu.NONE, MENU_MYLOCATION_ID, Menu.NONE, R.string.maps__my_location)
-				.setIcon(R.drawable.maps__ic_menu_mylocation).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		menu.add(Menu.NONE, MENU_COMPASS_ID, Menu.NONE, R.string.maps__compass)
-				.setIcon(R.drawable.maps__ic_menu_compass).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		menu.add(Menu.NONE, MENU_MAPMODE_ID, Menu.NONE, R.string.maps__map_mode)
-				.setIcon(R.drawable.maps__ic_menu_mapmode).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		menu.add(Menu.NONE, MENU_OFFLINE_ID, Menu.NONE, R.string.maps__offline_mode)
-				.setIcon(R.drawable.maps__ic_menu_offline).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		getSupportMenuInflater().inflate(R.menu.maps__menu_picker, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case MENU_AUTOZOOM_ID:
-			autozoom(mOverlay.getGeoPoint());
-			return true;
-		case MENU_COMPASS_ID:
-			changeCompassState();
-			return true;
-		case MENU_MAPMODE_ID:
-			showDialog(DIALOG_MAPMODE_ID);
-			return true;
-		case MENU_MYLOCATION_ID:
-			changeMyLocationState();
-			return true;
-		case MENU_OFFLINE_ID:
-			changeConnectionState();
-			return true;
-		case MENU_SAVE_ID:
+		final int id = item.getItemId();
+		if (id == R.id.maps__menu_accept) {
 			IGeoPoint point = mOverlay.getGeoPoint();
 			Location location = new Location("medesmapprovider");
 			location.setLatitude(point.getLatitudeE6() / (double) 1E6);
@@ -119,9 +86,13 @@ public class LocationPicker extends MapActivity {
 			setResult(RESULT_OK, new Intent().putExtra(MapsConstants.EXTRA_LOCATION, location));
 			finish();
 			return true;
-		default:
-			return super.onOptionsItemSelected(item);
+		} else if (id == R.id.maps__menu_map) {
+			showDialog(DIALOG_MAPMODE_ID);
+			return true;
+		} else if (id == R.id.maps__menu_place) {
+			changeMyLocationState();
+			return true;
 		}
+		return super.onOptionsItemSelected(item);
 	}
-
 }

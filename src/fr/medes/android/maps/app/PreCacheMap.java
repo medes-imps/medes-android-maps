@@ -20,8 +20,6 @@ public class PreCacheMap extends MapActivity {
 
 	private static final int ZOOM_FOR_PRECACHE = 11;
 
-	private static final int MENU_MAPMODE_ID = 100;
-
 	private String mTileSource = null;
 
 	@Override
@@ -82,20 +80,18 @@ public class PreCacheMap extends MapActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(Menu.NONE, MENU_MAPMODE_ID, Menu.NONE, R.string.maps__map_mode)
-				.setIcon(R.drawable.maps__ic_menu_mapmode).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		getSupportMenuInflater().inflate(R.menu.maps__menu_precachemap, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case MENU_MAPMODE_ID:
+		final int id = item.getItemId();
+		if (id == R.id.maps__menu_map) {
 			showDialog(DIALOG_MAPMODE_ID);
 			return true;
-		default:
-			return super.onOptionsItemSelected(item);
 		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	private AmlApplication getAmlApplication() {

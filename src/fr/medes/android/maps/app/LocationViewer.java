@@ -14,10 +14,6 @@ import fr.medes.android.maps.overlay.BubbleOverlay;
 
 public class LocationViewer extends MapActivity {
 
-	private static final int MENU_AUTOZOOM_ID = 100;
-	private static final int MENU_MAPMODE_ID = 101;
-	private static final int MENU_OFFLINE_ID = 102;
-
 	private BubbleOverlay mOverlay;
 
 	@Override
@@ -34,30 +30,21 @@ public class LocationViewer extends MapActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(Menu.NONE, MENU_AUTOZOOM_ID, Menu.NONE, R.string.maps__menu_autozoom)
-				.setIcon(R.drawable.maps__ic_menu_autozoom).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		menu.add(Menu.NONE, MENU_MAPMODE_ID, Menu.NONE, R.string.maps__map_mode)
-				.setIcon(R.drawable.maps__ic_menu_mapmode).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		menu.add(Menu.NONE, MENU_OFFLINE_ID, Menu.NONE, R.string.maps__offline_mode)
-				.setIcon(R.drawable.maps__ic_menu_offline).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		getSupportMenuInflater().inflate(R.menu.maps__menu_viewer, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case MENU_AUTOZOOM_ID:
-			autozoom(mOverlay.getGeoPoint());
-			return true;
-		case MENU_MAPMODE_ID:
+		final int id = item.getItemId();
+		if (id == R.id.maps__menu_map) {
 			showDialog(DIALOG_MAPMODE_ID);
 			return true;
-		case MENU_OFFLINE_ID:
-			changeConnectionState();
+		} else if (id == R.id.maps__menu_place) {
+			changeMyLocationState();
 			return true;
-		default:
-			return super.onOptionsItemSelected(item);
 		}
+		return super.onOptionsItemSelected(item);
 	}
 
 }

@@ -50,22 +50,22 @@
         android:visibility="gone" >
 
         <Button
-            android:id="@+id/maps__saveButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:minWidth="120dip"
-            android:text="@string/maps__menu_save" />
-
-        <Button
             android:id="@+id/maps__discardButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:minWidth="120dip"
-            android:text="@string/maps__menu_discard" />
+            android:text="@android:string/cancel" />
+
+        <Button
+            android:id="@+id/maps__saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:minWidth="120dip"
+            android:text="@android:string/ok" />
     </RelativeLayout>
 
 </LinearLayout>

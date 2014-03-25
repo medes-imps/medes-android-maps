@@ -4,6 +4,7 @@ import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.ResourceProxyImpl;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -15,7 +16,6 @@ import android.widget.RemoteViews;
 import fr.medes.android.app.WakefulIntentService;
 import fr.medes.android.maps.MapsConstants;
 import fr.medes.android.maps.R;
-import fr.medes.android.maps.ResourceProxyImpl;
 import fr.medes.android.maps.app.PreCacheMap;
 import fr.medes.android.maps.database.PreCache;
 import fr.medes.android.maps.offline.TileLoaderManager.OnTileLoadedListener;

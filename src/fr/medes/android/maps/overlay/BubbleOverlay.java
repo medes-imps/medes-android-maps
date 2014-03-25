@@ -30,7 +30,7 @@ public class BubbleOverlay extends Overlay {
 		mGeoPoint = point;
 
 		mBubble = context.getResources().getDrawable(R.drawable.maps__bubble);
-		mShadow = context.getResources().getDrawable(R.drawable.maps__shadow);
+		mShadow = context.getResources().getDrawable(R.drawable.maps__bubble_shadow);
 	}
 
 	public IGeoPoint getGeoPoint() {

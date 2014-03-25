@@ -8,8 +8,10 @@ import org.osmdroid.events.ZoomEvent;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.tileprovider.util.CloudmadeUtil;
+import org.osmdroid.util.ResourceProxyImpl;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.MyLocationOverlay;
+import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -27,7 +29,6 @@ import com.actionbarsherlock.app.SherlockActivity;
 
 import fr.medes.android.maps.MapsConstants;
 import fr.medes.android.maps.R;
-import fr.medes.android.maps.ResourceProxyImpl;
 import fr.medes.android.maps.offline.TileLoaderSettings;
 import fr.medes.android.maps.overlay.LongClickableOverlay;
 import fr.medes.android.maps.util.TileSourceUtil;
@@ -36,7 +37,6 @@ import fr.medes.android.maps.widget.BalloonView;
 public class MapActivity extends SherlockActivity {
 
 	private static final String EXTRA_SHOW_LOCATION = "SampleMapActivity_showLocation";
-	private static final String EXTRA_SHOW_COMPASS = "SampleMapActivity_showCompass";
 
 	private static final String PREFERENCES_NAME = "name";
 	private static final String PREFERENCE_ZOOM_LEVEL = "zoomLevel";
@@ -49,7 +49,7 @@ public class MapActivity extends SherlockActivity {
 	protected MapView mMapView;
 	protected ResourceProxy mResourceProxy;
 
-	private MyLocationOverlay mLocationOverlay;
+	private MyLocationNewOverlay mLocationOverlay;
 	private LongClickableOverlay mLongClickableOverlay;
 
 	private BalloonView mBalloonView;
@@ -77,7 +77,7 @@ public class MapActivity extends SherlockActivity {
 		mMapView.getController().setZoom(mPrefs.getInt(PREFERENCE_ZOOM_LEVEL, 1));
 		mMapView.scrollTo(mPrefs.getInt(PREFERENCE_SCROLL_X, 0), mPrefs.getInt(PREFERENCE_SCROLL_Y, 0));
 
-		mLocationOverlay = new MyLocationOverlay(getBaseContext(), mMapView, mResourceProxy);
+		mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(this), mMapView, mResourceProxy);
 		mMapView.getOverlayManager().add(mLocationOverlay);
 
 		if (isPrecachingEnabled()) {
@@ -104,14 +104,6 @@ public class MapActivity extends SherlockActivity {
 		return true;
 	}
 
-	public void changeCompassState() {
-		if (mLocationOverlay.isCompassEnabled()) {
-			mLocationOverlay.disableCompass();
-		} else {
-			mLocationOverlay.enableCompass();
-		}
-	}
-
 	public void changeMyLocationState() {
 		if (mLocationOverlay.isMyLocationEnabled()) {
 			mLocationOverlay.disableMyLocation();
@@ -133,10 +125,8 @@ public class MapActivity extends SherlockActivity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putBoolean(EXTRA_SHOW_LOCATION, mLocationOverlay.isMyLocationEnabled());
-		outState.putBoolean(EXTRA_SHOW_COMPASS, mLocationOverlay.isCompassEnabled());
 
 		mLocationOverlay.disableMyLocation();
-		mLocationOverlay.disableCompass();
 	}
 
 	@Override
@@ -144,9 +134,6 @@ public class MapActivity extends SherlockActivity {
 		super.onRestoreInstanceState(savedInstanceState);
 		if (savedInstanceState.getBoolean(EXTRA_SHOW_LOCATION)) {
 			mLocationOverlay.enableMyLocation();
-		}
-		if (savedInstanceState.getBoolean(EXTRA_SHOW_COMPASS)) {
-			mLocationOverlay.enableCompass();
 		}
 	}
 
@@ -165,8 +152,7 @@ public class MapActivity extends SherlockActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		final String tileSourceName = mPrefs.getString(PREFERENCE_TILE_SOURCE,
-				TileSourceFactory.DEFAULT_TILE_SOURCE.name());
+		final String tileSourceName = mPrefs.getString(PREFERENCE_TILE_SOURCE, TileSourceFactory.DEFAULT_TILE_SOURCE.name());
 		try {
 			final ITileSource tileSource = TileSourceFactory.getTileSource(tileSourceName);
 			mMapView.setTileSource(tileSource);
@@ -183,9 +169,8 @@ public class MapActivity extends SherlockActivity {
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
 		case DIALOG_MAPMODE_ID:
-			return new AlertDialog.Builder(this).setTitle(R.string.maps__map_mode)
-					.setSingleChoiceItems(TileSourceUtil.readableTileSources(mResourceProxy), -1, mMapModeListener)
-					.create();
+			return new AlertDialog.Builder(this).setTitle(R.string.maps__dialog_map)
+					.setSingleChoiceItems(TileSourceUtil.readableTileSources(mResourceProxy), -1, mMapModeListener).create();
 		default:
 			return super.onCreateDialog(id);
 		}
@@ -222,8 +207,7 @@ public class MapActivity extends SherlockActivity {
 			boolean isRecycled = true;
 			if (mBalloonView == null) {
 				mBalloonView = new BalloonView(MapActivity.this);
-				mBalloonView.setData(getString(R.string.maps__offline_title),
-						getString(R.string.maps__offline_description));
+				mBalloonView.setData(getString(R.string.maps__offline_title), getString(R.string.maps__offline_description));
 				mBalloonView.setOnClickListener(mBalloonClickListener);
 				isRecycled = false;
 			}

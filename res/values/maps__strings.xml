@@ -2,9 +2,8 @@
 <resources>
     
     <!-- Menu strings -->
-    <string name="maps__menu_save">Save</string>
-    <string name="maps__menu_autozoom">Autozoom</string>
-    <string name="maps__menu_discard">"Discard"</string>
+    <string name="maps__menu_place">"My location"</string>
+    <string name="maps__menu_map">"Map"</string>
 
     <!-- Coordinates viewer -->
     <string name="maps__show_on_map">Show on a map</string>
@@ -33,33 +32,7 @@
     <string name="maps__set_mode_online">Set to online mode</string>
     <string name="maps__set_mode_show_me">showing and tracking my current location</string>
     <string name="maps__set_mode_hide_me">hiding my current location</string>
-
-    <!-- Resource proxy strings -->
-    <string name="maps__mapnik">"Mapnik"</string>
-    <string name="maps__cyclemap">"Cycle Map"</string>
-    <string name="maps__public_transport">"Public transport"</string>
-    <string name="maps__base">"OSM base layer"</string>
-    <string name="maps__topo">"Topographic"</string>
-    <string name="maps__hills">"Hills"</string>
-    <string name="maps__cloudmade_standard">"CloudMade (Standard tiles)"</string>
-    <string name="maps__cloudmade_small">"CloudMade (small tiles)"</string>
-    <string name="maps__mapquest_osm">"Mapquest"</string>
-    <string name="maps__mapquest_aerial">"Mapquest Aerial"</string>
-    <string name="maps__bing">"Bing"</string>
-    <string name="maps__fiets_nl">"OpenFietsKaart overlay"</string>
-    <string name="maps__base_nl">"Netherlands base overlay"</string>
-    <string name="maps__roads_nl">"Netherlands roads overlay"</string>
-    <string name="maps__unknown">"Unknown"</string>
-    <string name="maps__format_distance_meters">"%s m"</string>
-    <string name="maps__format_distance_kilometers">"%s km"</string>
-    <string name="maps__format_distance_miles">"%s mi"</string>
-    <string name="maps__format_distance_nautical_miles">"%s nm"</string>
-    <string name="maps__format_distance_feet">"%s ft"</string>
-    <string name="maps__online_mode">"Online mode"</string>
-    <string name="maps__offline_mode">"Offline mode"</string>
-    <string name="maps__my_location">"My location"</string>
-    <string name="maps__compass">"Compass"</string>
-    <string name="maps__map_mode">"Map mode"</string>
+    <string name="maps__dialog_map">Map mode</string>
 
     <!-- Pre-cache string -->
     <string name="maps__offline_title">Pre-cache map area</string>

@@ -16,8 +16,6 @@
 
 package fr.medes.android.radar.app;
 
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,10 +23,13 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.Window;
 import android.widget.TextView;
+
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+
 import fr.medes.android.maps.MapsConstants;
 import fr.medes.android.maps.R;
 import fr.medes.android.radar.view.RadarView;
@@ -37,13 +38,9 @@ import fr.medes.android.radar.view.RadarView;
  * Simple Activity wrapper that hosts a {@link RadarView}
  * 
  */
-public class RadarActivity extends Activity {
+public class RadarActivity extends SherlockActivity {
 
 	private static final int LOCATION_UPDATE_INTERVAL_MILLIS = 1000;
-
-	private static final int MENU_STANDARD = Menu.FIRST + 1;
-
-	private static final int MENU_METRIC = Menu.FIRST + 2;
 
 	private static final String RADAR = "radar";
 
@@ -91,10 +88,8 @@ public class RadarActivity extends Activity {
 		mRadar.startSweep();
 
 		// Register for location updates
-		mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_UPDATE_INTERVAL_MILLIS, 1,
-				mRadar);
-		mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, LOCATION_UPDATE_INTERVAL_MILLIS, 1,
-				mRadar);
+		mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_UPDATE_INTERVAL_MILLIS, 1, mRadar);
+		mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, LOCATION_UPDATE_INTERVAL_MILLIS, 1, mRadar);
 	}
 
 	@Override
@@ -109,27 +104,20 @@ public class RadarActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		menu.add(0, MENU_STANDARD, 0, R.string.maps__menu_standard).setIcon(R.drawable.maps__ic_menu_standard)
-				.setAlphabeticShortcut('A');
-		menu.add(0, MENU_METRIC, 0, R.string.maps__menu_metric).setIcon(R.drawable.maps__ic_menu_metric)
-				.setAlphabeticShortcut('C');
-		return true;
+		getSupportMenuInflater().inflate(R.menu.maps__menu_radar, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case MENU_STANDARD: {
+		final int id = item.getItemId();
+		if (id == R.id.maps__menu_metric) {
 			setUseMetric(false);
 			return true;
-		}
-		case MENU_METRIC: {
+		} else if (id == R.id.maps__menu_standard) {
 			setUseMetric(true);
 			return true;
 		}
-		}
-
 		return super.onOptionsItemSelected(item);
 	}
 
