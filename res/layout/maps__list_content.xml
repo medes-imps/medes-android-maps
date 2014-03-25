@@ -53,7 +53,7 @@
             android:id="@+id/maps__discardButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:minWidth="120dip"
             android:text="@android:string/cancel" />
@@ -62,7 +62,7 @@
             android:id="@+id/maps__saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:minWidth="120dip"
             android:text="@android:string/ok" />
