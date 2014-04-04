@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- Menu strings -->
+    <string name="maps__menu_place">Ma position</string>
+    <string name="maps__menu_map">Carte</string>
+
+    <!-- Coordinates viewer -->
+    <string name="maps__show_on_map">Montrer sur la carte</string>
+    <string name="maps__navto">Aller à</string>
+    <string name="maps__navto_radar">Radar</string>
+
+    <!-- Coordinates providers -->
+    <string name="maps__gps">Gps</string>
+    <string name="maps__network">Réseau</string>
+    <string name="maps__best">Meilleur disponible</string>
+    <string name="maps__map">Carte</string>
+    <string name="maps__manual">Manuel</string>
+    
+    <!-- Location From sensor strings -->
+    <string name="maps__obtaining_location">Calcul de la position actuelle</string>
+    <string name="maps__provider_disabled">Le fournisseur %s est désactivé</string>
+
+    <!-- Radar strings -->
+    <string name="maps__scanning">Recherche&#8230;</string>
+    <string name="maps__menu_standard">Standard</string>
+    <string name="maps__menu_metric">Métric</string>
+
+    <!-- Map Activity strings -->
+    <string name="maps__map_ativity_title">Démonstration</string>
+    <string name="maps__set_mode_offline">Mode déconnecté activé</string>
+    <string name="maps__set_mode_online">Mode connecté activé</string>
+    <string name="maps__set_mode_show_me">Afficher la position actuelle</string>
+    <string name="maps__set_mode_hide_me">Cacher le position actuelle</string>
+    <string name="maps__dialog_map">Mode carte</string>
+
+    <!-- Pre-cache string -->
+    <string name="maps__offline_title">Zone de la carte en cache</string>
+    <string name="maps__offline_description">Téléchargement d\'une zone de la carte autour du point sélectionné</string>
+    <string name="maps__offline_wait">Ceci peut prendre quelques minutes</string>
+    <string name="maps__offline_percent">%1$d %%</string>
+    <string name="maps__offline_size">%1$d / %2$d</string>
+    <string name="maps__offline_zoommin">Zoom min</string>
+    <string name="maps__offline_zoommax">Zoom max</string>
+    <string name="maps__offline_area">Zone</string>
+    <string name="maps__offline_zoom_error">Le zoom minimal doit être inférieur au zoom maximal</string>
+    <string name="maps__offline_start">Démarrer</string>
+    <string name="maps__offline_cancel">Annuler</string>
+    <string name="maps__offline_close">Fermer</string>
+    <string name="maps__offline_noPreCacheHelpText">Pour mettre la zone en cache, rester sur la centre de la zone que vous voulez mettre en cache et cliquer sur la bulle.</string>
+    <string name="maps__offline_delete">Supprimer la zone dans le cache ?</string>
+    <string name="maps__offline_text1">%1$s min: %2$d max %3$d</string>
+    <string name="maps__offline_text2">N %1$.2f E %2$.2f S %3$.2f O %4$.2f</string>
+
+</resources>
