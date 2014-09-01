@@ -88,9 +88,9 @@ public final class MapsConstants {
 	public static final String EXTRA_REFRESH_PRECACHE = "refreshPreCache";
 
 	/**
-	 * Authority for he GPS url.
+	 * Authority for the GPS url.
 	 */
-	public static final String AUTHORITY = "fr.medes.android.maps";
+	public static String AUTHORITY = null;
 
 	/**
 	 * Mime type for gps coordinates.
