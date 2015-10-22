@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/maps__menu_metric"
+        android:icon="@drawable/maps__ic_action_metric"
+        android:title="@string/maps__menu_metric"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/maps__menu_standard"
+        android:icon="@drawable/maps__ic_action_standard"
+        android:title="@string/maps__menu_standard" />
+
+</menu>
