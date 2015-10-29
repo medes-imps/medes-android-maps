@@ -30,14 +30,18 @@ public class LocationPicker extends MapActivity {
 			l = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 		}
 
+		final double defaulLat = l != null ? l.getLatitude() : MapsConstants.DEFAULT_LATIUDE;
+		final double defaultLon = l != null ? l.getLongitude() : MapsConstants.DEFAULT_LONGITUDE;
+
 		final GeoPoint point;
-		if (l != null) {
-			point = new GeoPoint(l.getLatitude(), l.getLongitude());
-		} else {
+		if (getIntent().hasExtra(MapsConstants.EXTRA_LATITUDE)
+				&& getIntent().hasExtra(MapsConstants.EXTRA_LONGITUDE)) {
 			final Intent intent = getIntent();
-			double lat = intent.getDoubleExtra(MapsConstants.EXTRA_LATITUDE, MapsConstants.DEFAULT_LATIUDE);
-			double lon = intent.getDoubleExtra(MapsConstants.EXTRA_LONGITUDE, MapsConstants.DEFAULT_LONGITUDE);
+			double lat = intent.getDoubleExtra(MapsConstants.EXTRA_LATITUDE, defaulLat);
+			double lon = intent.getDoubleExtra(MapsConstants.EXTRA_LONGITUDE, defaultLon);
 			point = new GeoPoint(lat, lon);
+		} else {
+			point = new GeoPoint(defaulLat, defaultLon);
 		}
 
 		mOverlay = new BubbleClickableOverlay(this, point);
