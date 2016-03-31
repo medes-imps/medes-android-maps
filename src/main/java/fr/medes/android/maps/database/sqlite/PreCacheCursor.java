@@ -1,24 +1,14 @@
 package fr.medes.android.maps.database.sqlite;
 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteCursorDriver;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
-import android.database.sqlite.SQLiteQuery;
-import fr.medes.android.database.sqlite.BaseCursor;
+
+import fr.medes.android.database.sqlite.BaseCursorWrapper;
 import fr.medes.android.maps.database.PreCache;
 
-public class PreCacheCursor extends BaseCursor {
+public class PreCacheCursor extends BaseCursorWrapper {
 
-	public PreCacheCursor(SQLiteDatabase db, SQLiteCursorDriver driver, String editTable, SQLiteQuery query) {
-		super(db, driver, editTable, query);
-	}
-
-	public static class Factory implements CursorFactory {
-		@Override
-		public Cursor newCursor(SQLiteDatabase db, SQLiteCursorDriver masterQuery, String editTable, SQLiteQuery query) {
-			return new PreCacheCursor(db, masterQuery, editTable, query);
-		}
+	public PreCacheCursor(Cursor cursor) {
+		super(cursor);
 	}
 
 	public long getId() {

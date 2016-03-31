@@ -1,15 +1,14 @@
 package fr.medes.android.maps.app;
 
 import android.content.Intent;
+import android.database.Cursor;
 
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
-import fr.medes.android.database.sqlite.stmt.QueryBuilder;
 import fr.medes.android.maps.MapsConstants;
 import fr.medes.android.maps.database.PreCache;
-import fr.medes.android.maps.database.sqlite.MapsOpenHelper;
 import fr.medes.android.maps.database.sqlite.PreCacheCursor;
 import fr.medes.android.maps.overlay.BoundingBoxOverlay;
 
@@ -43,9 +42,8 @@ public class PreCacheMap extends MapActivity implements MapFragment.Callback {
 	}
 
 	private void showPreCache(final Intent intent) {
-		MapsOpenHelper dbHelper = MapsOpenHelper.getInstance();
-		PreCacheCursor c = new QueryBuilder(dbHelper, PreCache.Columns.TABLE_NAME)
-				.setCursorFactory(new PreCacheCursor.Factory()).query();
+		Cursor innerCursor = getContentResolver().query(PreCache.URI, null, null, null, null);
+		PreCacheCursor c = new PreCacheCursor(innerCursor);
 		for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
 			BoundingBoxOverlay bbo = new BoundingBoxOverlay(this);
 			bbo.setBounds(c.getNorth(), c.getEast(), c.getSouth(), c.getWest());

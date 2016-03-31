@@ -1,13 +1,13 @@
 package fr.medes.android.maps.app;
 
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import fr.medes.android.app.MessageDialogFragment;
-import fr.medes.android.maps.database.sqlite.MapsOpenHelper;
 
 public class PreCacheListActivity extends AppCompatActivity implements MessageDialogFragment.Callback {
 
@@ -39,7 +39,7 @@ public class PreCacheListActivity extends AppCompatActivity implements MessageDi
 	@Override
 	public void onClickDialog(int which, Object tag) {
 		if (which == DialogInterface.BUTTON_POSITIVE) {
-			MapsOpenHelper.getInstance().delete((long) tag);
+			getContentResolver().delete((Uri) tag, null, null);
 		}
 	}
 }

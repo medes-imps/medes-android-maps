@@ -13,16 +13,6 @@ public final class MapsConstants {
 	public static final double DEFAULT_EAST = 1.452513;
 
 	/**
-	 * A radius WGS84 major axis
-	 */
-	public static final double EARTH_MAJOR_AXIS = 6378137.0;
-
-	/**
-	 * WGS84 semi-major axis
-	 */
-	public static final double EARTH_SEMI_MAJOR_AXIS = 6356752.3142;
-
-	/**
 	 * latitude extra (must be a double value) to use when trying to visualize coordinates on a map, or trying to
 	 * navigate to it This must be used with MIME_GPS
 	 */
@@ -86,35 +76,5 @@ public final class MapsConstants {
 	 * Set to true to refresh the actual pre-cached areas
 	 */
 	public static final String EXTRA_REFRESH_PRECACHE = "refreshPreCache";
-
-	/**
-	 * Authority for the GPS url.
-	 */
-	public static String AUTHORITY = null;
-
-	/**
-	 * Mime type for gps coordinates.
-	 */
-	public static final String MIME_GPS = "vnd.fr.medes.android.maps/coordinates";
-
-	/**
-	 * Filter the available intents to ask for coordinates only using the sensor
-	 */
-	public static final String CATEGORY_GPS = "fr.medes.android.maps.category.GPS";
-
-	/**
-	 * Filter the available intents to ask for coordinates from the best sensor available
-	 */
-	public static final String CATEGORY_BEST = "fr.medes.android.maps.category.BEST";
-
-	/**
-	 * Filter the available intents to ask for coordinates from the network
-	 */
-	public static final String CATEGORY_NETWORK = "fr.medes.android.maps.category.NETWORK";
-
-	/**
-	 * Filter the available intents to ask for coordinates picking a point on a map
-	 */
-	public static final String CATEGORY_MAP = "fr.medes.android.maps.category.MAP";
 
 }

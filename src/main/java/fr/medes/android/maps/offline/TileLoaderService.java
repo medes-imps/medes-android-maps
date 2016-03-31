@@ -3,6 +3,7 @@ package fr.medes.android.maps.offline;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
@@ -20,15 +21,15 @@ import fr.medes.android.maps.MapsConstants;
 import fr.medes.android.maps.R;
 import fr.medes.android.maps.app.PreCacheMap;
 import fr.medes.android.maps.database.PreCache;
-import fr.medes.android.maps.database.sqlite.MapsOpenHelper;
 import fr.medes.android.maps.offline.TileLoaderManager.OnTileLoadedListener;
 
 public class TileLoaderService extends WakefulIntentService implements OnTileLoadedListener {
 
 	public interface TileLoaderServiceListener {
-		public void updateLoadedTilesCount(int loaded);
 
-		public void finished(Intent intent);
+		void updateLoadedTilesCount(int loaded);
+
+		void finished(Intent intent);
 	}
 
 	private static final int NOTIFICATION_DOWNLOAD_ID = 654875;
@@ -84,16 +85,16 @@ public class TileLoaderService extends WakefulIntentService implements OnTileLoa
 		mLoaderManager.requestTiles();
 
 		if (!refresh && !mLoaderManager.hasBeenStopped()) {
-			PreCache precache = new PreCache();
-			precache.provider = source.name();
-			precache.north = north;
-			precache.east = east;
-			precache.south = south;
-			precache.west = west;
-			precache.zoomMin = zoomMin;
-			precache.zoomMax = zoomMax;
+			ContentValues values = new ContentValues();
+			values.put(PreCache.Columns.PROVIDER, source.name());
+			values.put(PreCache.Columns.NORTH, north);
+			values.put(PreCache.Columns.EAST, east);
+			values.put(PreCache.Columns.SOUTH, south);
+			values.put(PreCache.Columns.WEST, west);
+			values.put(PreCache.Columns.ZOOM_MIN, zoomMin);
+			values.put(PreCache.Columns.ZOOM_MAX, zoomMax);
 
-			MapsOpenHelper.getInstance().upsert(precache);
+			getContentResolver().insert(PreCache.URI, values);
 
 			Intent clickIntent = new Intent(this, PreCacheMap.class);
 			clickIntent.putExtra(MapsConstants.EXTRA_SHOW_PRECACHE, true);

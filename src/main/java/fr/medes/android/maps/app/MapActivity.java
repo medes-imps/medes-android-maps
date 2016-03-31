@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.constants.GeoConstants;
 
 import fr.medes.android.app.SingleChoiceDialogFragment;
 import fr.medes.android.app.WakefulIntentService;
@@ -55,9 +56,8 @@ public class MapActivity extends AppCompatActivity implements SingleChoiceDialog
 	@Override
 	public void onSettingsSet(String tileSourceName, double latitude, double longitude, double distance, int zoomMin, int zoomMax) {
 		final double lat = Math.toRadians(latitude);
-		final double deltaLat = distance / (2 * MapsConstants.EARTH_MAJOR_AXIS);
-		final double deltaLon = Math.abs(2 * Math.asin(Math
-				.sin(distance / (4 * MapsConstants.EARTH_MAJOR_AXIS)) / Math.cos(lat)));
+		final double deltaLat = distance / (2 * GeoConstants.RADIUS_EARTH_METERS);
+		final double deltaLon = Math.abs(2 * Math.asin(Math.sin(distance / (4 * GeoConstants.RADIUS_EARTH_METERS)) / Math.cos(lat)));
 
 		final double deltaLatDegree = Math.toDegrees(deltaLat);
 		final double deltaLonDegree = Math.toDegrees(deltaLon);
