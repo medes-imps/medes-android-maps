@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+
     <!-- Menu strings -->
-    <string name="maps__menu_place">"My location"</string>
-    <string name="maps__menu_map">"Map"</string>
+    <string name="maps__menu_place">My location</string>
+    <string name="maps__menu_map">Map mode</string>
+    <string name="maps__menu_autozoom">Autozoom</string>
 
     <!-- Coordinates viewer -->
     <string name="maps__show_on_map">Show on a map</string>
@@ -16,7 +17,7 @@
     <string name="maps__best">Best available</string>
     <string name="maps__map">Map</string>
     <string name="maps__manual">Manual</string>
-    
+
     <!-- Location From sensor strings -->
     <string name="maps__obtaining_location">Obtaining current location</string>
     <string name="maps__provider_disabled">Provider %s is disabled</string>
@@ -43,10 +44,6 @@
     <string name="maps__offline_zoommin">Zoom min</string>
     <string name="maps__offline_zoommax">Zoom max</string>
     <string name="maps__offline_area">Area</string>
-    <string name="maps__offline_zoom_error">The minimum zoom level must be lower than the maximum zoom level</string>
-    <string name="maps__offline_start">Start</string>
-    <string name="maps__offline_cancel">Cancel</string>
-    <string name="maps__offline_close">Close</string>
     <string name="maps__offline_noPreCacheHelpText">To pre-cache an area of the map, long press on the center of the area you\'d like to save and then tap on the bubble.</string>
     <string name="maps__offline_delete">Delete this pre-cached map ?</string>
     <string name="maps__offline_text1">"%1$s min: %2$d max %3$d"</string>

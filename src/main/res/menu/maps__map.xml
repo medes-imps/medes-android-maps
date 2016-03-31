@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/maps__menu_place"
+        android:icon="@drawable/ic_my_location_white_24dp"
+        android:title="@string/maps__menu_place"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/maps__menu_mapmode"
+        android:icon="@drawable/ic_layers_white_24dp"
+        android:title="@string/maps__menu_map"
+        app:showAsAction="ifRoom"/>
+
+</menu>

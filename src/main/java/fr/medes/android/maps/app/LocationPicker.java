@@ -11,23 +11,29 @@ import android.view.MenuItem;
 
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
 
 import fr.medes.android.maps.MapsConstants;
 import fr.medes.android.maps.R;
 import fr.medes.android.maps.overlay.BubbleClickableOverlay;
 
-public class LocationPicker extends MapActivity {
+public class LocationPicker extends MapActivity implements MapFragment.Callback {
 
 	private BubbleClickableOverlay mOverlay;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onViewCreated(MapView view) {
+		mMapFragment.setPrecachingEnabled(false);
 
 		LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		Location l = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		if (l == null) {
-			l = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+		Location l = null;
+		try {
+			l = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+			if (l == null) {
+				l = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+			}
+		} catch (SecurityException e) {
+			e.printStackTrace();
 		}
 
 		final double defaulLat = l != null ? l.getLatitude() : MapsConstants.DEFAULT_LATIUDE;
@@ -45,13 +51,9 @@ public class LocationPicker extends MapActivity {
 		}
 
 		mOverlay = new BubbleClickableOverlay(this, point);
-		getMapView().getOverlays().add(mOverlay);
+		view.getOverlays().add(mOverlay);
 
-	}
-
-	@Override
-	public boolean isPrecachingEnabled() {
-		return false;
+		mMapFragment.autozoom(point);
 	}
 
 	@Override
@@ -70,13 +72,13 @@ public class LocationPicker extends MapActivity {
 		GeoPoint point = new GeoPoint(latitude, longitude);
 		mOverlay.setGeoPoint(point);
 
-		autozoom(point);
+		mMapFragment.autozoom(point);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.maps__menu_picker, menu);
+		inflater.inflate(R.menu.maps__picker, menu);
 		return true;
 	}
 
@@ -86,18 +88,16 @@ public class LocationPicker extends MapActivity {
 		if (id == R.id.maps__menu_accept) {
 			IGeoPoint point = mOverlay.getGeoPoint();
 			Location location = new Location("medesmapprovider");
-			location.setLatitude(point.getLatitudeE6() / (double) 1E6);
-			location.setLongitude(point.getLongitudeE6() / (double) 1E6);
+			location.setLatitude(point.getLatitudeE6() / 1E6);
+			location.setLongitude(point.getLongitudeE6() / 1E6);
 			setResult(RESULT_OK, new Intent().putExtra(MapsConstants.EXTRA_LOCATION, location));
 			finish();
 			return true;
-		} else if (id == R.id.maps__menu_map) {
-			showDialog(DIALOG_MAPMODE_ID);
+		} else if (id == R.id.maps__menu_autozoom) {
+			mMapFragment.autozoom(mOverlay.getGeoPoint());
 			return true;
-		} else if (id == R.id.maps__menu_place) {
-			changeMyLocationState();
-			return true;
+		} else {
+			return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
 	}
 }

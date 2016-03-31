@@ -1,11 +1,5 @@
 package fr.medes.android.maps.offline;
 
-import org.osmdroid.tileprovider.MapTile;
-import org.osmdroid.tileprovider.tilesource.ITileSource;
-import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
-import org.osmdroid.util.ResourceProxyImpl;
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -15,11 +9,18 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 
+import org.osmdroid.tileprovider.MapTile;
+import org.osmdroid.tileprovider.tilesource.ITileSource;
+import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.ResourceProxyImpl;
+
 import fr.medes.android.app.WakefulIntentService;
 import fr.medes.android.maps.MapsConstants;
 import fr.medes.android.maps.R;
 import fr.medes.android.maps.app.PreCacheMap;
 import fr.medes.android.maps.database.PreCache;
+import fr.medes.android.maps.database.sqlite.MapsOpenHelper;
 import fr.medes.android.maps.offline.TileLoaderManager.OnTileLoadedListener;
 
 public class TileLoaderService extends WakefulIntentService implements OnTileLoadedListener {
@@ -91,7 +92,8 @@ public class TileLoaderService extends WakefulIntentService implements OnTileLoa
 			precache.west = west;
 			precache.zoomMin = zoomMin;
 			precache.zoomMax = zoomMax;
-			precache.saveOrUpdate(this);
+
+			MapsOpenHelper.getInstance().upsert(precache);
 
 			Intent clickIntent = new Intent(this, PreCacheMap.class);
 			clickIntent.putExtra(MapsConstants.EXTRA_SHOW_PRECACHE, true);

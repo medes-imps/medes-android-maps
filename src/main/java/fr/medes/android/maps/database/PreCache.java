@@ -1,10 +1,8 @@
 package fr.medes.android.maps.database;
 
-import android.content.ContentUris;
-import android.content.ContentValues;
-import android.content.Context;
 import android.net.Uri;
 import android.provider.BaseColumns;
+
 import fr.medes.android.maps.MapsConstants;
 import fr.medes.android.util.content.ContentUrisUtils;
 
@@ -31,30 +29,5 @@ public class PreCache {
 	public double west;
 	public int zoomMin;
 	public int zoomMax;
-
-	public PreCache() {
-
-	}
-
-	public Uri saveOrUpdate(Context context) {
-		ContentValues values = new ContentValues();
-		values.put(Columns.PROVIDER, provider);
-		values.put(Columns.NORTH, north);
-		values.put(Columns.EAST, east);
-		values.put(Columns.SOUTH, south);
-		values.put(Columns.WEST, west);
-		values.put(Columns.ZOOM_MIN, zoomMin);
-		values.put(Columns.ZOOM_MAX, zoomMax);
-
-		Uri uri = null;
-		if (_id != -1) {
-			uri = ContentUris.withAppendedId(Columns.CONTENT_URI, _id);
-			context.getContentResolver().update(uri, values, null, null);
-		} else {
-			uri = context.getContentResolver().insert(Columns.CONTENT_URI, values);
-			_id = ContentUris.parseId(uri);
-		}
-		return uri;
-	}
 
 }

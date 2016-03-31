@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+
     <!-- Menu strings -->
     <string name="maps__menu_place">Ma position</string>
-    <string name="maps__menu_map">Carte</string>
+    <string name="maps__menu_mapmode">Carte</string>
+    <string name="maps__menu_autozoom">Autozoom</string>
 
     <!-- Coordinates viewer -->
     <string name="maps__show_on_map">Montrer sur la carte</string>
@@ -16,7 +17,7 @@
     <string name="maps__best">Meilleur disponible</string>
     <string name="maps__map">Carte</string>
     <string name="maps__manual">Manuel</string>
-    
+
     <!-- Location From sensor strings -->
     <string name="maps__obtaining_location">Calcul de la position actuelle</string>
     <string name="maps__provider_disabled">Le fournisseur %s est désactivé</string>
@@ -43,10 +44,6 @@
     <string name="maps__offline_zoommin">Zoom min</string>
     <string name="maps__offline_zoommax">Zoom max</string>
     <string name="maps__offline_area">Zone</string>
-    <string name="maps__offline_zoom_error">Le zoom minimal doit être inférieur au zoom maximal</string>
-    <string name="maps__offline_start">Démarrer</string>
-    <string name="maps__offline_cancel">Annuler</string>
-    <string name="maps__offline_close">Fermer</string>
     <string name="maps__offline_noPreCacheHelpText">Pour mettre la zone en cache, rester sur la centre de la zone que vous voulez mettre en cache et cliquer sur la bulle.</string>
     <string name="maps__offline_delete">Supprimer la zone dans le cache ?</string>
     <string name="maps__offline_text1">%1$s min: %2$d max %3$d</string>

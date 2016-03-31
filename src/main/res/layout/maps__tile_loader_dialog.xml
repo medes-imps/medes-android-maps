@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
@@ -12,57 +13,37 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/maps__offline_zoommin" />
+            android:text="@string/maps__offline_zoommin"/>
 
         <Spinner
             android:id="@+id/maps__offline_zoommin"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:prompt="@string/maps__offline_zoommin" />
+            android:prompt="@string/maps__offline_zoommin"/>
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/maps__offline_zoommax" />
+            android:text="@string/maps__offline_zoommax"/>
 
         <Spinner
             android:id="@+id/maps__offline_zoommax"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:prompt="@string/maps__offline_zoommax" />
+            android:prompt="@string/maps__offline_zoommax"/>
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/maps__offline_area" />
+            android:text="@string/maps__offline_area"/>
 
         <Spinner
             android:id="@+id/maps__offline_area"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:entries="@array/maps__offline_area_entries"
-            android:prompt="@string/maps__offline_area" />
+            android:prompt="@string/maps__offline_area"/>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/maps__offline_cancel"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/maps__offline_cancel" />
-
-            <Button
-                android:id="@+id/maps__offline_start"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/maps__offline_start" />
-        </LinearLayout>
     </LinearLayout>
 
 </ScrollView>

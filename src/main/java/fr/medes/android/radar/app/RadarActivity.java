@@ -104,7 +104,7 @@ public class RadarActivity extends AppCompatActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.maps__menu_radar, menu);
+		inflater.inflate(R.menu.maps__radar, menu);
 		return true;
 	}
 
