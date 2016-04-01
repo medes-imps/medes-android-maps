@@ -114,7 +114,7 @@ public class MapFragment extends Fragment implements MapListener,
 			return true;
 		} else if (item.getItemId() == R.id.maps__menu_mapmode) {
 			SingleChoiceDialogFragment fragment = SingleChoiceDialogFragment.newInstance(
-					getString(R.string.maps__dialog_map),
+					getString(R.string.maps__menu_mapmode),
 					TileSourceUtil.readableTileSources(mResourceProxy), -1, null);
 			fragment.show(getFragmentManager(), "mapMode");
 			return true;

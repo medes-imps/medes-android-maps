@@ -6,34 +6,16 @@
     <string name="maps__menu_map">Map mode</string>
     <string name="maps__menu_autozoom">Autozoom</string>
 
-    <!-- Coordinates viewer -->
-    <string name="maps__show_on_map">Show on a map</string>
-    <string name="maps__navto">Navigate to</string>
-    <string name="maps__navto_radar">Radar</string>
-
-    <!-- Coordinates providers -->
-    <string name="maps__gps">Gps</string>
-    <string name="maps__network">Network</string>
-    <string name="maps__best">Best available</string>
-    <string name="maps__map">Map</string>
-    <string name="maps__manual">Manual</string>
-
-    <!-- Location From sensor strings -->
-    <string name="maps__obtaining_location">Obtaining current location</string>
-    <string name="maps__provider_disabled">Provider %s is disabled</string>
-
     <!-- Radar strings -->
     <string name="maps__scanning">"Scanning&#8230;"</string>
     <string name="maps__menu_standard">Standard</string>
     <string name="maps__menu_metric">Metric</string>
 
     <!-- Map Activity strings -->
-    <string name="maps__map_ativity_title">Map Demo</string>
     <string name="maps__set_mode_offline">Set to offline mode</string>
     <string name="maps__set_mode_online">Set to online mode</string>
     <string name="maps__set_mode_show_me">showing and tracking my current location</string>
     <string name="maps__set_mode_hide_me">hiding my current location</string>
-    <string name="maps__dialog_map">Map mode</string>
 
     <!-- Pre-cache string -->
     <string name="maps__offline_title">Pre-cache map area</string>
