@@ -30,5 +30,6 @@
     <string name="maps__offline_delete">Supprimer la zone dans le cache ?</string>
     <string name="maps__offline_text1">%1$s min: %2$d max %3$d</string>
     <string name="maps__offline_text2">N %1$.2f E %2$.2f S %3$.2f O %4$.2f</string>
+    <string name="maps__offline_settings">Paramètres du cache</string>
 
 </resources>

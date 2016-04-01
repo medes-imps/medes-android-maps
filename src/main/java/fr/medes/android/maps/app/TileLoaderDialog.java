@@ -29,15 +29,16 @@ public class TileLoaderDialog extends AlertDialog implements DialogInterface.OnC
 	public TileLoaderDialog(Context context, OnSettingsSetListener listener, int theme, int zoomMin, int zoomMax) {
 		super(context, theme);
 
+		setTitle(R.string.maps__offline_settings);
+
 		LayoutInflater inflater = LayoutInflater.from(context);
 		View view = inflater.inflate(R.layout.maps__tile_loader_dialog, null);
 		setView(view);
 
 		mOnSettingsSetListener = listener;
 
-		ArrayAdapter<Integer> zoomAdapter = new ArrayAdapter<Integer>(context, android.R.layout.simple_spinner_item);
+		ArrayAdapter<Integer> zoomAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item);
 		zoomAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
 		for (int i = zoomMin; i <= zoomMax; i++) {
 			zoomAdapter.add(i);
 		}

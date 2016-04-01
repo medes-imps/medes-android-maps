@@ -13,7 +13,9 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/maps__offline_zoommin"/>
+            android:text="@string/maps__offline_zoommin"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textStyle="bold"/>
 
         <Spinner
             android:id="@+id/maps__offline_zoommin"
@@ -24,7 +26,9 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/maps__offline_zoommax"/>
+            android:text="@string/maps__offline_zoommax"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textStyle="bold"/>
 
         <Spinner
             android:id="@+id/maps__offline_zoommax"
@@ -35,7 +39,9 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/maps__offline_area"/>
+            android:text="@string/maps__offline_area"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textStyle="bold"/>
 
         <Spinner
             android:id="@+id/maps__offline_area"
