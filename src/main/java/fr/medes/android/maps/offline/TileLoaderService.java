@@ -1,14 +1,16 @@
 package fr.medes.android.maps.offline;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import android.widget.RemoteViews;
+import android.support.v4.app.TaskStackBuilder;
 
 import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
@@ -25,27 +27,35 @@ import fr.medes.android.maps.offline.TileLoaderManager.OnTileLoadedListener;
 
 public class TileLoaderService extends WakefulIntentService implements OnTileLoadedListener {
 
+	private static final String ACTION_CANCEL = "fr.medes.maps.TileLoaderService_cancel";
+
 	public interface TileLoaderServiceListener {
 
 		void updateLoadedTilesCount(int loaded);
 
-		void finished(Intent intent);
+		void finished();
 	}
 
 	private static final int NOTIFICATION_DOWNLOAD_ID = 654875;
-	private static final int NOTIFICATION_FINISHED_ID = 654876;
 
 	private final TileLoaderBinder mBinder = new TileLoaderBinder();
 
 	private long lastTime = -1L;
 
 	private NotificationManager mManager;
-	private Notification mNotification;
+	private NotificationCompat.Builder mBuilder;
 
 	private TileLoaderManager mLoaderManager;
 	private int mTilesToDownload;
 
 	private TileLoaderServiceListener mListener;
+
+	private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			stop();
+		}
+	};
 
 	public TileLoaderService() {
 		super(TileLoaderService.class.getName());
@@ -58,6 +68,8 @@ public class TileLoaderService extends WakefulIntentService implements OnTileLoa
 
 	@Override
 	protected void doWakefulWork(Intent intent) {
+		registerReceiver(mBroadcastReceiver, new IntentFilter(ACTION_CANCEL));
+
 		final boolean refresh = intent.getBooleanExtra(MapsConstants.EXTRA_REFRESH_PRECACHE, false);
 		final double north = intent.getDoubleExtra(MapsConstants.EXTRA_LAT_NORTH, MapsConstants.DEFAULT_NORTH);
 		final double south = intent.getDoubleExtra(MapsConstants.EXTRA_LAT_SOUTH, MapsConstants.DEFAULT_SOUTH);
@@ -84,37 +96,38 @@ public class TileLoaderService extends WakefulIntentService implements OnTileLoa
 		mLoaderManager.setOnTileLoadedListener(this);
 		mLoaderManager.requestTiles();
 
-		if (!refresh && !mLoaderManager.hasBeenStopped()) {
-			ContentValues values = new ContentValues();
-			values.put(PreCache.Columns.PROVIDER, source.name());
-			values.put(PreCache.Columns.NORTH, north);
-			values.put(PreCache.Columns.EAST, east);
-			values.put(PreCache.Columns.SOUTH, south);
-			values.put(PreCache.Columns.WEST, west);
-			values.put(PreCache.Columns.ZOOM_MIN, zoomMin);
-			values.put(PreCache.Columns.ZOOM_MAX, zoomMax);
+		if (mListener != null) {
+			mListener.finished();
+		}
+		unregisterReceiver(mBroadcastReceiver);
 
-			getContentResolver().insert(PreCache.URI, values);
-
-			Intent clickIntent = new Intent(this, PreCacheMap.class);
-			clickIntent.putExtra(MapsConstants.EXTRA_SHOW_PRECACHE, true);
-			clickIntent.putExtra(MapsConstants.EXTRA_LAT_NORTH, north);
-			clickIntent.putExtra(MapsConstants.EXTRA_LON_EAST, east);
-			clickIntent.putExtra(MapsConstants.EXTRA_LAT_SOUTH, south);
-			clickIntent.putExtra(MapsConstants.EXTRA_LON_WEST, west);
-			clickIntent.putExtra(MapsConstants.EXTRA_TILE_SOURCE, source.name());
-
-			String title = getString(R.string.maps__offline_text1, source.name(), zoomMin, zoomMax);
-			String text = getString(R.string.maps__offline_text2, north, east, south, west);
-			showDownloadFinishedNotification(title, text, clickIntent);
-
-			if (mListener != null) {
-				mListener.finished(clickIntent);
-			}
+		if (refresh || mLoaderManager.hasBeenStopped()) {
+			mManager.cancel(NOTIFICATION_DOWNLOAD_ID);
+			return;
 		}
 
-		publishProgress(mLoaderManager.getTilesDownloadedCount());
-		mManager.cancel(NOTIFICATION_DOWNLOAD_ID);
+		ContentValues values = new ContentValues();
+		values.put(PreCache.Columns.PROVIDER, source.name());
+		values.put(PreCache.Columns.NORTH, north);
+		values.put(PreCache.Columns.EAST, east);
+		values.put(PreCache.Columns.SOUTH, south);
+		values.put(PreCache.Columns.WEST, west);
+		values.put(PreCache.Columns.ZOOM_MIN, zoomMin);
+		values.put(PreCache.Columns.ZOOM_MAX, zoomMax);
+
+		getContentResolver().insert(PreCache.URI, values);
+
+		Intent clickIntent = new Intent(this, PreCacheMap.class);
+		clickIntent.putExtra(MapsConstants.EXTRA_SHOW_PRECACHE, true);
+		clickIntent.putExtra(MapsConstants.EXTRA_LAT_NORTH, north);
+		clickIntent.putExtra(MapsConstants.EXTRA_LON_EAST, east);
+		clickIntent.putExtra(MapsConstants.EXTRA_LAT_SOUTH, south);
+		clickIntent.putExtra(MapsConstants.EXTRA_LON_WEST, west);
+		clickIntent.putExtra(MapsConstants.EXTRA_TILE_SOURCE, source.name());
+
+		String title = getString(R.string.maps__offline_text1, source.name(), zoomMin, zoomMax);
+		String text = getString(R.string.maps__offline_text2, north, east, south, west);
+		showDownloadFinishedNotification(title, text, clickIntent);
 	}
 
 	public void stop() {
@@ -154,53 +167,55 @@ public class TileLoaderService extends WakefulIntentService implements OnTileLoa
 	}
 
 	private void publishProgress(int progress) {
-		if (mNotification != null) {
-			mNotification.contentView.setProgressBar(R.id.maps__offline_progress, mTilesToDownload, progress, false);
-			mNotification.contentView.setTextViewText(R.id.maps__offline_percent,
-					getString(R.string.maps__offline_percent, progress * 100 / mTilesToDownload));
-			mNotification.contentView.setTextViewText(R.id.maps__offline_size,
-					getString(R.string.maps__offline_size, progress, mTilesToDownload));
-			mManager.notify(NOTIFICATION_DOWNLOAD_ID, mNotification);
+		if (mBuilder == null) {
+			return;
 		}
+		mBuilder.setContentText(getString(R.string.maps__offline_size, progress, mTilesToDownload))
+				.setContentInfo(getString(R.string.maps__offline_percent, progress * 100 / mTilesToDownload))
+				.setProgress(mTilesToDownload, progress, false);
+		mManager.notify(NOTIFICATION_DOWNLOAD_ID, mBuilder.build());
 	}
 
 	private void showDownloadNotification(String label) {
-		RemoteViews contentView = new RemoteViews(getPackageName(), R.layout.maps__offline_download_notification);
-		contentView.setTextViewText(R.id.maps__offline_title, label);
-		contentView.setTextViewText(R.id.maps__offline_percent, getString(R.string.maps__offline_percent, 0));
-		contentView.setTextViewText(R.id.maps__offline_size,
-				getString(R.string.maps__offline_size, 0, mTilesToDownload));
+		Intent resultIntent = new Intent(this, TileLoaderActivity.class);
+		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+		stackBuilder.addParentStack(TileLoaderActivity.class);
+		stackBuilder.addNextIntent(resultIntent);
+		PendingIntent resultPendingIntent =
+				stackBuilder.getPendingIntent(
+						0,
+						PendingIntent.FLAG_UPDATE_CURRENT
+				);
 
-		Intent contentIntent = new Intent(this, TileLoaderActivity.class);
-		mNotification = new Notification(R.drawable.maps__map, getString(R.string.maps__offline_title),
-				System.currentTimeMillis());
-		mNotification.flags |= Notification.FLAG_NO_CLEAR;
-		mNotification.flags |= Notification.FLAG_ONGOING_EVENT;
-		mNotification.contentView = contentView;
-		mNotification.contentIntent = PendingIntent.getActivity(this, 0, contentIntent, 0);
+		Intent cancelintent = new Intent(ACTION_CANCEL);
+		PendingIntent cancelPendingIntent = PendingIntent.getBroadcast(this, 0, cancelintent, 0);
+
+		mBuilder = new NotificationCompat.Builder(this)
+				.setContentTitle(label)
+				.setContentText(getString(R.string.maps__offline_title))
+				.setContentInfo("ta mere")
+				.setProgress(mTilesToDownload, 0, false)
+				.setSmallIcon(R.drawable.maps__map)
+				.setContentIntent(resultPendingIntent)
+				.addAction(android.R.drawable.ic_menu_close_clear_cancel, getString(android.R.string.cancel), cancelPendingIntent)
+				.setOngoing(true);
 
 		mManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		mManager.notify(NOTIFICATION_DOWNLOAD_ID, mNotification);
+		mManager.notify(NOTIFICATION_DOWNLOAD_ID, mBuilder.build());
 	}
 
 	private void showDownloadFinishedNotification(String title, String text, Intent clickIntent) {
-		NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-				.setTicker(getString(R.string.maps__offline_title))
-				.setSmallIcon(R.drawable.maps__map)
-				.setWhen(System.currentTimeMillis())
+		if (mBuilder == null) {
+			return;
+		}
+		mBuilder.setOngoing(false)
+				.setAutoCancel(true)
+				.setProgress(0, 0, false)
 				.setContentTitle(title)
-				.setContentText(text);
-
-		// Make a startActivity() PendingIntent for the notification.
-		PendingIntent pendingIntent = PendingIntent
-				.getActivity(this, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-		// Update the notification.
-//		notification.flags |= Notification.FLAG_SHOW_LIGHTS;
-//		notification.flags |= Notification.FLAG_AUTO_CANCEL;
-//		notification.defaults |= Notification.DEFAULT_LIGHTS;
-
-		mManager.notify(NOTIFICATION_FINISHED_ID, builder.build());
+				.setContentText(text)
+				.setContentInfo(null)
+				.setContentIntent(PendingIntent.getActivity(this, 0, clickIntent, 0));
+		mManager.notify(NOTIFICATION_DOWNLOAD_ID, mBuilder.build());
 	}
 
 	public class TileLoaderBinder extends Binder {

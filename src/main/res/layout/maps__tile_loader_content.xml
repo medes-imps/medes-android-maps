@@ -44,13 +44,13 @@
 
         <ProgressBar
             android:id="@+id/maps__offline_progress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="fill_parent"
             android:layout_height="15dip"
             android:layout_marginLeft="5dip"
             android:layout_marginRight="5dip"
             android:indeterminate="false"
-            android:indeterminateOnly="false"
-            android:progressDrawable="@android:drawable/progress_horizontal"/>
+            android:indeterminateOnly="false"/>
 
         <LinearLayout
             android:layout_width="fill_parent"

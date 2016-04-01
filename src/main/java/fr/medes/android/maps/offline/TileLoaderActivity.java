@@ -1,19 +1,22 @@
 package fr.medes.android.maps.offline;
 
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import fr.medes.android.maps.R;
 import fr.medes.android.maps.offline.TileLoaderService.TileLoaderServiceListener;
 
-public class TileLoaderActivity extends Activity implements OnClickListener {
+public class TileLoaderActivity extends AppCompatActivity implements OnClickListener {
 
 	private View mCancelButton;
 	private View mCloseButton;
@@ -30,7 +33,13 @@ public class TileLoaderActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.maps__tile_loader_content);
+
+		ActionBar actionBar = getSupportActionBar();
+		if (actionBar != null) {
+			actionBar.setDisplayHomeAsUpEnabled(true);
+		}
 
 		mCancelButton = findViewById(R.id.maps__offline_cancel);
 		mCloseButton = findViewById(R.id.maps__offline_close);
@@ -43,6 +52,17 @@ public class TileLoaderActivity extends Activity implements OnClickListener {
 		mCloseButton.setOnClickListener(this);
 
 		doBindService();
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				finish();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 
 	@Override
@@ -122,9 +142,11 @@ public class TileLoaderActivity extends Activity implements OnClickListener {
 		}
 
 		@Override
-		public void finished(Intent intent) {
-			startActivity(intent);
-		};
+		public void finished() {
+			finish();
+		}
+
+		;
 	};
 
 }
