@@ -193,7 +193,7 @@ public class TileLoaderService extends WakefulIntentService implements OnTileLoa
 		mBuilder = new NotificationCompat.Builder(this)
 				.setContentTitle(label)
 				.setContentText(getString(R.string.maps__offline_title))
-				.setContentInfo("ta mere")
+				.setContentInfo(null)
 				.setProgress(mTilesToDownload, 0, false)
 				.setSmallIcon(R.drawable.maps__map)
 				.setContentIntent(resultPendingIntent)
