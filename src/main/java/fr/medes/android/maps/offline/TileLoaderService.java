@@ -214,7 +214,8 @@ public class TileLoaderService extends WakefulIntentService implements OnTileLoa
 				.setContentTitle(title)
 				.setContentText(text)
 				.setContentInfo(null)
-				.setContentIntent(PendingIntent.getActivity(this, 0, clickIntent, 0));
+				.setContentIntent(PendingIntent.getActivity(this, 0, clickIntent, 0))
+				.mActions.clear();
 		mManager.notify(NOTIFICATION_DOWNLOAD_ID, mBuilder.build());
 	}
 

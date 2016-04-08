@@ -4,7 +4,6 @@ import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
@@ -34,15 +33,11 @@ public class PreCacheListFragment extends ListFragment implements LoaderManager.
 
 		@Override
 		public void onClick(View v) {
-			Bundle args = new Bundle();
-			args.putString(MessageDialogFragment.ARG_TITLE, getString(android.R.string.dialog_alert_title));
-			args.putString(MessageDialogFragment.ARG_MESSAGE, getString(R.string.maps__offline_delete));
-			args.putBoolean(MessageDialogFragment.ARG_CANCEL, true);
-			args.putParcelable(MessageDialogFragment.ARG_TAG, (Uri) v.getTag());
-
-			MessageDialogFragment fragment = new MessageDialogFragment();
-			fragment.setArguments(args);
-			fragment.show(getFragmentManager(), "delete");
+			MessageDialogFragment.newInstance(
+					getString(android.R.string.dialog_alert_title),
+					getString(R.string.maps__offline_delete),
+					true
+			).show(getFragmentManager(), v.getTag().toString());
 		}
 	};
 

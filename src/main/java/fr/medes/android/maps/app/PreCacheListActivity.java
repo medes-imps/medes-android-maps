@@ -37,9 +37,9 @@ public class PreCacheListActivity extends AppCompatActivity implements MessageDi
 	}
 
 	@Override
-	public void onClickDialog(int which, Object tag) {
+	public void onClickDialog(int which, String tag) {
 		if (which == DialogInterface.BUTTON_POSITIVE) {
-			getContentResolver().delete((Uri) tag, null, null);
+			getContentResolver().delete(Uri.parse(tag), null, null);
 		}
 	}
 }
