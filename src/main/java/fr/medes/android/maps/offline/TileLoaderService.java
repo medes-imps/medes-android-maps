@@ -195,7 +195,7 @@ public class TileLoaderService extends WakefulIntentService implements OnTileLoa
 				.setContentText(getString(R.string.maps__offline_title))
 				.setContentInfo(null)
 				.setProgress(mTilesToDownload, 0, false)
-				.setSmallIcon(R.drawable.maps__map)
+				.setSmallIcon(R.drawable.ic_map_white)
 				.setContentIntent(resultPendingIntent)
 				.addAction(android.R.drawable.ic_menu_close_clear_cancel, getString(android.R.string.cancel), cancelPendingIntent)
 				.setOngoing(true);

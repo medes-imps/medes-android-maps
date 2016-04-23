@@ -1,10 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/maps__menu_autozoom"
-        android:icon="@drawable/ic_zoom_out_map_white_24dp"
+        android:icon="@drawable/ic_zoom_out_map_white"
         android:title="@string/maps__menu_autozoom"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 
 </menu>
