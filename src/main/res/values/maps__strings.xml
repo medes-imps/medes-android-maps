@@ -3,7 +3,7 @@
 
     <!-- Menu strings -->
     <string name="maps__menu_place">My location</string>
-    <string name="maps__menu_map">Map mode</string>
+    <string name="maps__menu_mapmode">Map mode</string>
     <string name="maps__menu_autozoom">Autozoom</string>
 
     <!-- Radar strings -->
