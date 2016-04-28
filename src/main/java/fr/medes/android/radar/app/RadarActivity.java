@@ -16,19 +16,25 @@
 
 package fr.medes.android.radar.app;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Window;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import fr.medes.android.maps.MapsConstants;
 import fr.medes.android.maps.R;
@@ -42,8 +48,9 @@ public class RadarActivity extends AppCompatActivity {
 	private static final int LOCATION_UPDATE_INTERVAL_MILLIS = 1000;
 
 	private static final String RADAR = "radar";
-
 	private static final String PREF_METRIC = "metric";
+
+	private static final int REQUEST_PERMISSION = 1;
 
 	private SensorManager mSensorManager;
 
@@ -86,19 +93,45 @@ public class RadarActivity extends AppCompatActivity {
 		// Start animating the radar screen
 		mRadar.startSweep();
 
-		// Register for location updates
-		mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_UPDATE_INTERVAL_MILLIS, 1, mRadar);
-		mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, LOCATION_UPDATE_INTERVAL_MILLIS, 1, mRadar);
+		if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+			// Register for location updates
+			mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_UPDATE_INTERVAL_MILLIS, 1, mRadar);
+			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, LOCATION_UPDATE_INTERVAL_MILLIS, 1, mRadar);
+		} else {
+			ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_PERMISSION);
+		}
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
 		mSensorManager.unregisterListener(mRadar);
-		mLocationManager.removeUpdates(mRadar);
+
+		try {
+			mLocationManager.removeUpdates(mRadar);
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		}
 
 		// Stop animating the radar screen
 		mRadar.stopSweep();
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		switch (requestCode) {
+			case REQUEST_PERMISSION:
+				for (int grant : grantResults) {
+					if (grant != PackageManager.PERMISSION_GRANTED) {
+						Toast.makeText(this, R.string.aml__permission_not_granted, Toast.LENGTH_LONG).show();
+						finish();
+						return;
+					}
+				}
+				break;
+			default:
+				super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		}
 	}
 
 	@Override
@@ -124,7 +157,7 @@ public class RadarActivity extends AppCompatActivity {
 	private void setUseMetric(boolean useMetric) {
 		SharedPreferences.Editor e = mPrefs.edit();
 		e.putBoolean(PREF_METRIC, useMetric);
-		e.commit();
+		e.apply();
 		mRadar.setUseMetric(useMetric);
 	}
 }

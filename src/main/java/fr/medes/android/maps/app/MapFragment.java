@@ -1,10 +1,14 @@
 package fr.medes.android.maps.app;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +30,8 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
+import java.util.ArrayList;
+
 import fr.medes.android.app.SingleChoiceDialogFragment;
 import fr.medes.android.maps.R;
 import fr.medes.android.maps.overlay.LongClickableOverlay;
@@ -42,6 +48,8 @@ public class MapFragment extends Fragment implements MapListener,
 	private static final String PREFERENCE_SCROLL_X = "scrollX";
 	private static final String PREFERENCE_SCROLL_Y = "scrollY";
 	private static final String PREFERENCE_TILE_SOURCE = "tileSource";
+
+	private static final int REQUEST_PERMISSION_ID = 1;
 
 	private ResourceProxy mResourceProxy;
 
@@ -60,6 +68,11 @@ public class MapFragment extends Fragment implements MapListener,
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		String[] permissions = getMissinPermissions();
+		if (permissions.length > 0) {
+			requestPermissions(permissions, REQUEST_PERMISSION_ID);
+		}
 
 		// only do static initialisation if needed
 		if (CloudmadeUtil.getCloudmadeKey().length() == 0) {
@@ -179,6 +192,22 @@ public class MapFragment extends Fragment implements MapListener,
 		mCallback = null;
 	}
 
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		switch (requestCode) {
+			case REQUEST_PERMISSION_ID:
+				for (int grant : grantResults) {
+					if (grant != PackageManager.PERMISSION_GRANTED) {
+						Toast.makeText(getContext(), R.string.aml__permission_not_granted, Toast.LENGTH_LONG).show();
+						return;
+					}
+				}
+				break;
+			default:
+				super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		}
+	}
+
 	public MapView getMapView() {
 		return (MapView) getView();
 	}
@@ -219,6 +248,17 @@ public class MapFragment extends Fragment implements MapListener,
 
 	public void autozoom(IGeoPoint point) {
 		getMapView().getController().animateTo(point);
+	}
+
+	private String[] getMissinPermissions() {
+		ArrayList<String> missingPermissions = new ArrayList<>();
+		if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+			missingPermissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+		}
+		if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+			missingPermissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+		}
+		return missingPermissions.toArray(new String[missingPermissions.size()]);
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////
