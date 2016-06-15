@@ -10,13 +10,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
+import fr.medes.android.BuildConfigHelper;
 import fr.medes.android.maps.database.PreCache;
 import fr.medes.android.maps.database.sqlite.MapsOpenHelper;
 
 public class MapsContentProvider extends ContentProvider {
 
-	public static final String AUTHORITY = "fr.medes.maps";
+	public static final String AUTHORITY = BuildConfigHelper.APPLICATION_ID + ".mapsprovider";
 
 	private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -24,6 +26,7 @@ public class MapsContentProvider extends ContentProvider {
 	private static final int PRECACHE_ID = 2;
 
 	static {
+		Log.i(">>>>>>TAG>>>>>", AUTHORITY);
 		sUriMatcher.addURI(AUTHORITY, PreCache.TABLE_NAME, PRECACHE);
 		sUriMatcher.addURI(AUTHORITY, PreCache.TABLE_NAME + "/#", PRECACHE_ID);
 	}

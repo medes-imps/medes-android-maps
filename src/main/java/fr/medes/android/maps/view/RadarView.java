@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package fr.medes.android.radar.view;
+package fr.medes.android.maps.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;

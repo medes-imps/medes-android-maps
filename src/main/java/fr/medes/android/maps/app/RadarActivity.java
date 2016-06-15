@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package fr.medes.android.radar.app;
+package fr.medes.android.maps.app;
 
 import android.Manifest;
 import android.content.Context;
@@ -38,7 +38,7 @@ import android.widget.Toast;
 
 import fr.medes.android.maps.MapsConstants;
 import fr.medes.android.maps.R;
-import fr.medes.android.radar.view.RadarView;
+import fr.medes.android.maps.view.RadarView;
 
 /**
  * Simple Activity wrapper that hosts a {@link RadarView}
