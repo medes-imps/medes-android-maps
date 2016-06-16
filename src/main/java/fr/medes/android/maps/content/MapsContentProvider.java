@@ -10,7 +10,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import fr.medes.android.BuildConfigHelper;
 import fr.medes.android.maps.database.PreCache;
@@ -26,7 +25,6 @@ public class MapsContentProvider extends ContentProvider {
 	private static final int PRECACHE_ID = 2;
 
 	static {
-		Log.i(">>>>>>TAG>>>>>", AUTHORITY);
 		sUriMatcher.addURI(AUTHORITY, PreCache.TABLE_NAME, PRECACHE);
 		sUriMatcher.addURI(AUTHORITY, PreCache.TABLE_NAME + "/#", PRECACHE_ID);
 	}
