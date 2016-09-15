@@ -3,12 +3,14 @@ package fr.medes.android.maps.content;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import fr.medes.android.BuildConfigHelper;
@@ -17,7 +19,7 @@ import fr.medes.android.maps.database.sqlite.MapsOpenHelper;
 
 public class MapsContentProvider extends ContentProvider {
 
-	public static final String AUTHORITY = BuildConfigHelper.APPLICATION_ID + ".mapsprovider";
+	public static final String AUTHORITY = (String) BuildConfigHelper.getBuildConfigValue("AUTHORITY_MAPS_PROVIDER");
 
 	private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -42,7 +44,7 @@ public class MapsContentProvider extends ContentProvider {
 
 	@Nullable
 	@Override
-	public String getType(Uri uri) {
+	public String getType(@NonNull Uri uri) {
 		switch (sUriMatcher.match(uri)) {
 			case PRECACHE:
 				return VND_DIR + PreCache.TABLE_NAME;
@@ -55,7 +57,7 @@ public class MapsContentProvider extends ContentProvider {
 
 	@Nullable
 	@Override
-	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+	public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 		SQLiteDatabase db = mOpenHelper.getReadableDatabase();
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 		switch (sUriMatcher.match(uri)) {
@@ -70,14 +72,17 @@ public class MapsContentProvider extends ContentProvider {
 				throw new IllegalArgumentException("Unknown URL " + uri);
 		}
 		Cursor c = qb.query(db, projection, selection, selectionArgs, null, null, sortOrder);
-		c.setNotificationUri(getContext().getContentResolver(), uri);
+		Context context = getContext();
+		if (context != null) {
+			c.setNotificationUri(context.getContentResolver(), uri);
+		}
 		return c;
 	}
 
 	@Override
-	public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+	public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
 		SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-		int result = -1;
+		int result;
 		switch (sUriMatcher.match(uri)) {
 			case PRECACHE:
 				result = db.update(PreCache.TABLE_NAME, values, selection, selectionArgs);
@@ -88,20 +93,26 @@ public class MapsContentProvider extends ContentProvider {
 			default:
 				throw new IllegalArgumentException("Unknown URL " + uri);
 		}
-		getContext().getContentResolver().notifyChange(uri, null);
+		Context context = getContext();
+		if (context != null) {
+			context.getContentResolver().notifyChange(uri, null);
+		}
 		return result;
 	}
 
 	@Nullable
 	@Override
-	public Uri insert(Uri uri, ContentValues values) {
+	public Uri insert(@NonNull Uri uri, ContentValues values) {
 		SQLiteDatabase db = mOpenHelper.getWritableDatabase();
 		switch (sUriMatcher.match(uri)) {
 			case PRECACHE:
 				long rowId = db.insert(PreCache.TABLE_NAME, null, values);
 				if (rowId != -1) {
 					Uri rowUri = ContentUris.withAppendedId(PreCache.URI, rowId);
-					getContext().getContentResolver().notifyChange(rowUri, null);
+					Context context = getContext();
+					if (context != null) {
+						context.getContentResolver().notifyChange(rowUri, null);
+					}
 					return rowUri;
 				}
 				throw new SQLException("Failed to insert row into " + PreCache.TABLE_NAME);
@@ -111,8 +122,8 @@ public class MapsContentProvider extends ContentProvider {
 	}
 
 	@Override
-	public int delete(Uri uri, String selection, String[] selectionArgs) {
-		int result = -1;
+	public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
+		int result;
 		SQLiteDatabase db = mOpenHelper.getWritableDatabase();
 		switch (sUriMatcher.match(uri)) {
 			case PRECACHE:
@@ -124,7 +135,10 @@ public class MapsContentProvider extends ContentProvider {
 			default:
 				throw new IllegalArgumentException("Unknown URL " + uri);
 		}
-		getContext().getContentResolver().notifyChange(uri, null);
+		Context context = getContext();
+		if (context != null) {
+			context.getContentResolver().notifyChange(uri, null);
+		}
 		return result;
 	}
 }
