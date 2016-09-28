@@ -60,15 +60,15 @@ public class LocationPicker extends MapActivity implements MapFragment.Callback 
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		IGeoPoint point = mOverlay.getGeoPoint();
-		outState.putInt(MapsConstants.EXTRA_LATITUDE, point.getLatitudeE6());
-		outState.putInt(MapsConstants.EXTRA_LONGITUDE, point.getLongitudeE6());
+		outState.putDouble(MapsConstants.EXTRA_LATITUDE, point.getLatitude());
+		outState.putDouble(MapsConstants.EXTRA_LONGITUDE, point.getLongitude());
 	}
 
 	@Override
 	protected void onRestoreInstanceState(Bundle savedInstanceState) {
 		super.onRestoreInstanceState(savedInstanceState);
-		int latitude = savedInstanceState.getInt(MapsConstants.EXTRA_LATITUDE);
-		int longitude = savedInstanceState.getInt(MapsConstants.EXTRA_LONGITUDE);
+		double latitude = savedInstanceState.getDouble(MapsConstants.EXTRA_LATITUDE);
+		double longitude = savedInstanceState.getDouble(MapsConstants.EXTRA_LONGITUDE);
 		GeoPoint point = new GeoPoint(latitude, longitude);
 		mOverlay.setGeoPoint(point);
 
@@ -88,8 +88,8 @@ public class LocationPicker extends MapActivity implements MapFragment.Callback 
 		if (id == R.id.maps__menu_accept) {
 			IGeoPoint point = mOverlay.getGeoPoint();
 			Location location = new Location("medesmapprovider");
-			location.setLatitude(point.getLatitudeE6() / 1E6);
-			location.setLongitude(point.getLongitudeE6() / 1E6);
+			location.setLatitude(point.getLatitude());
+			location.setLongitude(point.getLongitude());
 			setResult(RESULT_OK, new Intent().putExtra(MapsConstants.EXTRA_LOCATION, location));
 			finish();
 			return true;

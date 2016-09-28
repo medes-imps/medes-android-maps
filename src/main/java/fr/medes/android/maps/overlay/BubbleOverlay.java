@@ -1,16 +1,17 @@
 package fr.medes.android.maps.overlay;
 
-import org.osmdroid.api.IGeoPoint;
-import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.Overlay;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+
+import org.osmdroid.api.IGeoPoint;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Overlay;
+
 import fr.medes.android.maps.R;
 
 public class BubbleOverlay extends Overlay {
@@ -21,13 +22,17 @@ public class BubbleOverlay extends Overlay {
 	private final Rect rect = new Rect();
 	private final Point reuse = new Point();
 
+	private final float mScale;
+
 	private View mParent;
 
 	private IGeoPoint mGeoPoint;
 
 	public BubbleOverlay(Context context, GeoPoint point) {
-		super(context);
+		super();
 		mGeoPoint = point;
+
+		mScale = context.getResources().getDisplayMetrics().density;
 
 		mBubble = context.getResources().getDrawable(R.drawable.maps__bubble);
 		mShadow = context.getResources().getDrawable(R.drawable.maps__bubble_shadow);
@@ -74,7 +79,7 @@ public class BubbleOverlay extends Overlay {
 		final int markerWidth = (int) (d.getIntrinsicWidth() * mScale);
 		final int markerHeight = (int) (d.getIntrinsicHeight() * mScale);
 
-		rect.set(0, 0, 0 + markerWidth, 0 + markerHeight);
+		rect.set(0, 0, markerWidth, markerHeight);
 
 		if (shadow) {
 			rect.offset(0, -markerHeight);

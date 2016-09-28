@@ -1,18 +1,18 @@
 package fr.medes.android.maps.offline;
 
+import org.osmdroid.tileprovider.MapTile;
+import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedList;
 
-import org.osmdroid.tileprovider.MapTile;
-import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
-
 public class TileLoaderManager {
 
 	public interface OnTileLoadedListener {
-		public void onTileLoaded(MapTile tile);
+		void onTileLoaded(MapTile tile);
 	}
 
 	private static final int MAX_FAILED = 100;
@@ -27,7 +27,7 @@ public class TileLoaderManager {
 	private final int mZoomMax;
 	private final int mZoomMin;
 
-	private final LinkedList<MapTile> mFailedTiles = new LinkedList<MapTile>();
+	private final LinkedList<MapTile> mFailedTiles = new LinkedList<>();
 
 	private final int mTilesToDownload;
 
@@ -38,7 +38,7 @@ public class TileLoaderManager {
 	private int mTilesDownloaded = 0;
 
 	public TileLoaderManager(final OnlineTileSourceBase source, final double east, final double north,
-			final double south, final double west, final int zoomMin, final int zoomMax) {
+	                         final double south, final double west, final int zoomMin, final int zoomMax) {
 		mTileSource = source;
 
 		mNorth = north;
@@ -53,7 +53,7 @@ public class TileLoaderManager {
 	}
 
 	public TileLoaderManager(final OnlineTileSourceBase source, final double east, final double north,
-			final double south, final double west) {
+	                         final double south, final double west) {
 		this(source, east, north, south, west, source.getMinimumZoomLevel(), source.getMaximumZoomLevel());
 	}
 

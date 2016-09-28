@@ -79,9 +79,9 @@ public class RadarActivity extends AppCompatActivity {
 
 		// Read the target from our intent
 		Intent i = getIntent();
-		int latE6 = (int) (i.getDoubleExtra(MapsConstants.EXTRA_LATITUDE, 0) * 1E6);
-		int lonE6 = (int) (i.getDoubleExtra(MapsConstants.EXTRA_LONGITUDE, 0) * 1E6);
-		mRadar.setTarget(latE6, lonE6);
+		double lat = i.getDoubleExtra(MapsConstants.EXTRA_LATITUDE, 0);
+		double lon = i.getDoubleExtra(MapsConstants.EXTRA_LONGITUDE, 0);
+		mRadar.setTarget(lat, lon);
 		mRadar.setDistanceView((TextView) findViewById(R.id.maps__distance));
 	}
 

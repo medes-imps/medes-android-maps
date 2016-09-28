@@ -1,6 +1,5 @@
 package fr.medes.android.maps.overlay;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -30,8 +29,8 @@ public class BoundingBoxOverlay extends Overlay {
 	private double mSouth;
 	private double mWest;
 
-	public BoundingBoxOverlay(Context context) {
-		super(context);
+	public BoundingBoxOverlay() {
+		super();
 	}
 
 	public void setBounds(double north, double east, double south, double west) {

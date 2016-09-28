@@ -1,23 +1,22 @@
 package fr.medes.android.maps.overlay;
 
+import android.graphics.Canvas;
+import android.view.MotionEvent;
+
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Overlay;
 
-import android.content.Context;
-import android.graphics.Canvas;
-import android.view.MotionEvent;
-
 public class LongClickableOverlay extends Overlay {
 
 	public interface OnLongClickListener {
-		public boolean onLongClick(MapView mapView, IGeoPoint point);
+		boolean onLongClick(MapView mapView, IGeoPoint point);
 	}
 
 	private OnLongClickListener mListener;
 
-	public LongClickableOverlay(Context context, OnLongClickListener listener) {
-		super(context);
+	public LongClickableOverlay(OnLongClickListener listener) {
+		super();
 		mListener = listener;
 	}
 

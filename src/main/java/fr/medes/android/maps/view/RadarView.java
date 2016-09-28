@@ -36,6 +36,7 @@ import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
+
 import fr.medes.android.maps.R;
 
 public class RadarView extends View implements SensorEventListener, LocationListener {
@@ -66,32 +67,32 @@ public class RadarView extends View implements SensorEventListener, LocationList
 	 * These are the list of choices for the radius of the outer circle on the screen when using metric units. All items
 	 * are in kilometers. This array is used to choose the scale of the radar display.
 	 */
-	private static double mMetricScaleChoices[] = { 100 * KM_PER_METERS, 200 * KM_PER_METERS, 400 * KM_PER_METERS, 1,
-			2, 4, 8, 20, 40, 100, 200, 400, 1000, 2000, 4000, 10000, 20000, 40000, 80000 };
+	private static double mMetricScaleChoices[] = {100 * KM_PER_METERS, 200 * KM_PER_METERS, 400 * KM_PER_METERS, 1,
+			2, 4, 8, 20, 40, 100, 200, 400, 1000, 2000, 4000, 10000, 20000, 40000, 80000};
 
 	/**
 	 * Once the scale is chosen, this array is used to convert the number of kilometers on the screen to an integer.
 	 * (Note that for short distances we use meters, so we multiply the distance by {@link #METERS_PER_KM}. (This array
 	 * is for metric measurements.)
 	 */
-	private static float mMetricDisplayUnitsPerKm[] = { METERS_PER_KM, METERS_PER_KM, METERS_PER_KM, METERS_PER_KM,
-			METERS_PER_KM, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
+	private static float mMetricDisplayUnitsPerKm[] = {METERS_PER_KM, METERS_PER_KM, METERS_PER_KM, METERS_PER_KM,
+			METERS_PER_KM, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f};
 
 	/**
 	 * This array holds the formatting string used to display the distance to the target. (This array is for metric
 	 * measurements.)
 	 */
-	private static String mMetricDisplayFormats[] = { "%.0fm", "%.0fm", "%.0fm", "%.0fm", "%.0fm", "%.1fkm", "%.1fkm",
+	private static String mMetricDisplayFormats[] = {"%.0fm", "%.0fm", "%.0fm", "%.0fm", "%.0fm", "%.1fkm", "%.1fkm",
 			"%.0fkm", "%.0fkm", "%.0fkm", "%.0fkm", "%.0fkm", "%.0fkm", "%.0fkm", "%.0fkm", "%.0fkm", "%.0fkm",
-			"%.0fkm", "%.0fkm" };
+			"%.0fkm", "%.0fkm"};
 
 	/**
 	 * This array holds the formatting string used to display the distance on each ring of the radar screen. (This array
 	 * is for metric measurements.)
 	 */
-	private static String mMetricScaleFormats[] = { "%.0fm", "%.0fm", "%.0fm", "%.0fm", "%.0fm", "%.0fkm", "%.0fkm",
+	private static String mMetricScaleFormats[] = {"%.0fm", "%.0fm", "%.0fm", "%.0fm", "%.0fm", "%.0fkm", "%.0fkm",
 			"%.0fkm", "%.0fkm", "%.0fkm", "%.0fkm", "%.0fkm", "%.0fkm", "%.0fkm", "%.0fkm", "%.0fkm", "%.0fkm",
-			"%.0fkm", "%.0fkm", "%.0fkm" };
+			"%.0fkm", "%.0fkm", "%.0fkm"};
 
 	private static float KM_PER_YARDS = 0.0009144f;
 	private static float KM_PER_MILES = 1.609344f;
@@ -102,37 +103,37 @@ public class RadarView extends View implements SensorEventListener, LocationList
 	 * These are the list of choices for the radius of the outer circle on the screen when using standard units. All
 	 * items are in kilometers. This array is used to choose the scale of the radar display.
 	 */
-	private static double mEnglishScaleChoices[] = { 100 * KM_PER_YARDS, 200 * KM_PER_YARDS, 400 * KM_PER_YARDS,
+	private static double mEnglishScaleChoices[] = {100 * KM_PER_YARDS, 200 * KM_PER_YARDS, 400 * KM_PER_YARDS,
 			1000 * KM_PER_YARDS, 1 * KM_PER_MILES, 2 * KM_PER_MILES, 4 * KM_PER_MILES, 8 * KM_PER_MILES,
 			20 * KM_PER_MILES, 40 * KM_PER_MILES, 100 * KM_PER_MILES, 200 * KM_PER_MILES, 400 * KM_PER_MILES,
 			1000 * KM_PER_MILES, 2000 * KM_PER_MILES, 4000 * KM_PER_MILES, 10000 * KM_PER_MILES, 20000 * KM_PER_MILES,
-			40000 * KM_PER_MILES, 80000 * KM_PER_MILES };
+			40000 * KM_PER_MILES, 80000 * KM_PER_MILES};
 
 	/**
 	 * Once the scale is chosen, this array is used to convert the number of kilometers on the screen to an integer.
 	 * (Note that for short distances we use meters, so we multiply the distance by {@link #YARDS_PER_KM}. (This array
 	 * is for standard measurements.)
 	 */
-	private static float mEnglishDisplayUnitsPerKm[] = { YARDS_PER_KM, YARDS_PER_KM, YARDS_PER_KM, YARDS_PER_KM,
+	private static float mEnglishDisplayUnitsPerKm[] = {YARDS_PER_KM, YARDS_PER_KM, YARDS_PER_KM, YARDS_PER_KM,
 			MILES_PER_KM, MILES_PER_KM, MILES_PER_KM, MILES_PER_KM, MILES_PER_KM, MILES_PER_KM, MILES_PER_KM,
 			MILES_PER_KM, MILES_PER_KM, MILES_PER_KM, MILES_PER_KM, MILES_PER_KM, MILES_PER_KM, MILES_PER_KM,
-			MILES_PER_KM, MILES_PER_KM };
+			MILES_PER_KM, MILES_PER_KM};
 
 	/**
 	 * This array holds the formatting string used to display the distance to the target. (This array is for standard
 	 * measurements.)
 	 */
-	private static String mEnglishDisplayFormats[] = { "%.0fyd", "%.0fyd", "%.0fyd", "%.0fyd", "%.1fmi", "%.1fmi",
+	private static String mEnglishDisplayFormats[] = {"%.0fyd", "%.0fyd", "%.0fyd", "%.0fyd", "%.1fmi", "%.1fmi",
 			"%.1fmi", "%.1fmi", "%.0fmi", "%.0fmi", "%.0fmi", "%.0fmi", "%.0fmi", "%.0fmi", "%.0fmi", "%.0fmi",
-			"%.0fmi", "%.0fmi", "%.0fmi", "%.0fmi" };
+			"%.0fmi", "%.0fmi", "%.0fmi", "%.0fmi"};
 
 	/**
 	 * This array holds the formatting string used to display the distance on each ring of the radar screen. (This array
 	 * is for standard measurements.)
 	 */
-	private static String mEnglishScaleFormats[] = { "%.0fyd", "%.0fyd", "%.0fyd", "%.0fyd", "%.2fmi", "%.1fmi",
+	private static String mEnglishScaleFormats[] = {"%.0fyd", "%.0fyd", "%.0fyd", "%.0fyd", "%.2fmi", "%.1fmi",
 			"%.0fmi", "%.0fmi", "%.0fmi", "%.0fmi", "%.0fmi", "%.0fmi", "%.0fmi", "%.0fmi", "%.0fmi", "%.0fmi",
-			"%.0fmi", "%.0fmi", "%.0fmi", "%.0fmi" };
+			"%.0fmi", "%.0fmi", "%.0fmi", "%.0fmi"};
 
 	/**
 	 * True when we have know our own location
@@ -275,18 +276,18 @@ public class RadarView extends View implements SensorEventListener, LocationList
 
 	/**
 	 * Sets the target to track on the radar
-	 * 
-	 * @param latE6 Latitude of the target, multiplied by 1,000,000
-	 * @param lonE6 Longitude of the target, multiplied by 1,000,000
+	 *
+	 * @param lat Latitude of the target.
+	 * @param lon Longitude of the target.
 	 */
-	public void setTarget(int latE6, int lonE6) {
-		mTargetLat = latE6 / (double) 1E6;
-		mTargetLon = lonE6 / (double) 1E6;
+	public void setTarget(double lat, double lon) {
+		mTargetLat = lat;
+		mTargetLon = lon;
 	}
 
 	/**
 	 * Sets the view that we will use to report distance
-	 * 
+	 *
 	 * @param t The text view used to report distance
 	 */
 	public void setDistanceView(TextView t) {
@@ -388,7 +389,7 @@ public class RadarView extends View implements SensorEventListener, LocationList
 
 	/**
 	 * Called when a location provider has a new location to report
-	 * 
+	 *
 	 * @see android.location.LocationListener#onLocationChanged(android.location.Location)
 	 */
 	@Override
@@ -439,7 +440,7 @@ public class RadarView extends View implements SensorEventListener, LocationList
 
 	/**
 	 * Called when a location provider has changed its availability.
-	 * 
+	 *
 	 * @see android.location.LocationListener#onStatusChanged(java.lang.String, int, android.os.Bundle)
 	 */
 	@Override
@@ -447,37 +448,37 @@ public class RadarView extends View implements SensorEventListener, LocationList
 
 		if (LocationManager.GPS_PROVIDER.equals(provider)) {
 			switch (status) {
-			case LocationProvider.AVAILABLE:
-				mGpsAvailable = true;
-				break;
-			case LocationProvider.OUT_OF_SERVICE:
-			case LocationProvider.TEMPORARILY_UNAVAILABLE:
-				mGpsAvailable = false;
+				case LocationProvider.AVAILABLE:
+					mGpsAvailable = true;
+					break;
+				case LocationProvider.OUT_OF_SERVICE:
+				case LocationProvider.TEMPORARILY_UNAVAILABLE:
+					mGpsAvailable = false;
 
-				if (mNetworkLocation != null && mNetworkAvailable) {
-					// Fallback to network location
-					mLastGpsFixTime = 0L;
-					onLocationChanged(mNetworkLocation);
-				} else {
-					handleUnknownLocation();
-				}
+					if (mNetworkLocation != null && mNetworkAvailable) {
+						// Fallback to network location
+						mLastGpsFixTime = 0L;
+						onLocationChanged(mNetworkLocation);
+					} else {
+						handleUnknownLocation();
+					}
 
-				break;
+					break;
 			}
 
 		} else if (LocationManager.NETWORK_PROVIDER.equals(provider)) {
 			switch (status) {
-			case LocationProvider.AVAILABLE:
-				mNetworkAvailable = true;
-				break;
-			case LocationProvider.OUT_OF_SERVICE:
-			case LocationProvider.TEMPORARILY_UNAVAILABLE:
-				mNetworkAvailable = false;
+				case LocationProvider.AVAILABLE:
+					mNetworkAvailable = true;
+					break;
+				case LocationProvider.OUT_OF_SERVICE:
+				case LocationProvider.TEMPORARILY_UNAVAILABLE:
+					mNetworkAvailable = false;
 
-				if (!mGpsAvailable) {
-					handleUnknownLocation();
-				}
-				break;
+					if (!mGpsAvailable) {
+						handleUnknownLocation();
+					}
+					break;
 			}
 		}
 	}
@@ -492,7 +493,7 @@ public class RadarView extends View implements SensorEventListener, LocationList
 
 	/**
 	 * Update state to reflect whether we are using metric or standard units.
-	 * 
+	 *
 	 * @param useMetric True if the display should use metric units
 	 */
 	public void setUseMetric(boolean useMetric) {
@@ -507,7 +508,7 @@ public class RadarView extends View implements SensorEventListener, LocationList
 	/**
 	 * Update our state to reflect a new distance to the target. This may require choosing a new scale for the radar
 	 * rings.
-	 * 
+	 *
 	 * @param distanceKm The new distance to the target
 	 */
 	private void updateDistance(double distanceKm) {

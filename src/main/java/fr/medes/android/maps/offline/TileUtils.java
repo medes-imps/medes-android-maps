@@ -1,20 +1,20 @@
 package fr.medes.android.maps.offline;
 
+import org.osmdroid.tileprovider.MapTile;
+import org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants;
+import org.osmdroid.tileprovider.tilesource.ITileSource;
+import org.osmdroid.tileprovider.util.StreamUtils;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.osmdroid.tileprovider.MapTile;
-import org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants;
-import org.osmdroid.tileprovider.tilesource.ITileSource;
-import org.osmdroid.tileprovider.util.StreamUtils;
-
 public class TileUtils {
 
 	public static int countTiles(final ITileSource source, final double north, final double west, final double south,
-			final double east, final int zMin, final int zMax) {
+	                             final double east, final int zMin, final int zMax) {
 		int zoomMin = Math.max(source.getMinimumZoomLevel(), zMin);
 		int zoomMax = Math.min(source.getMaximumZoomLevel(), zMax);
 
@@ -28,19 +28,18 @@ public class TileUtils {
 	}
 
 	public static int countTiles(final ITileSource source, final double north, final double west, final double south,
-			final double east) {
+	                             final double east) {
 		return countTiles(source, north, west, south, east, source.getMinimumZoomLevel(), source.getMaximumZoomLevel());
 	}
 
 	/**
 	 * For a description see:
-	 * 
-	 * @see http://wiki.openstreetmap.org/index.php/Slippy_map_tilenames For a code-description see:
-	 * @see http://wiki.openstreetmap.org/index.php/Slippy_map_tilenames#compute_bounding_box_for_tile_number
-	 * @param lat latitude to get the {@link MapTile} for.
-	 * @param lon longitude to get the {@link MaptTile} for.
-	 * @param zoom the zoom level to get the {@link MaptTile} for.
+	 *
+	 * @param lat  latitude to get the {@link MapTile} for.
+	 * @param lon  longitude to get the {@link MapTile} for.
+	 * @param zoom the zoom level to get the {@link MapTile} for.
 	 * @return The {@link MapTile} providing 'x' 'y' and 'z'(oom) for the coordinates passed.
+	 * @see <a href="http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames">Slippy map tilenames</a>
 	 */
 	public static MapTile getTileNumber(final double lat, final double lon, final int zoom) {
 		int xtile = (int) Math.floor((lon + 180) / 360 * (1 << zoom));

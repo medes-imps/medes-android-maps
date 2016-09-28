@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import org.osmdroid.ResourceProxy;
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.events.MapListener;
 import org.osmdroid.events.ScrollEvent;
@@ -25,9 +24,7 @@ import org.osmdroid.events.ZoomEvent;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.tileprovider.util.CloudmadeUtil;
-import org.osmdroid.util.ResourceProxyImpl;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 import java.util.ArrayList;
@@ -50,9 +47,6 @@ public class MapFragment extends Fragment implements MapListener,
 	private static final String PREFERENCE_TILE_SOURCE = "tileSource";
 
 	private static final int REQUEST_PERMISSION_ID = 1;
-
-	private ResourceProxy mResourceProxy;
-
 
 	private MyLocationNewOverlay mLocationOverlay;
 	private LongClickableOverlay mLongClickableOverlay;
@@ -80,7 +74,6 @@ public class MapFragment extends Fragment implements MapListener,
 		}
 
 		mPrefs = getContext().getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
-		mResourceProxy = new ResourceProxyImpl(getContext());
 
 		setHasOptionsMenu(true);
 	}
@@ -88,17 +81,17 @@ public class MapFragment extends Fragment implements MapListener,
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		MapView view = new MapView(getContext(), 256, mResourceProxy);
+		MapView view = new MapView(getContext());
 		view.setBuiltInZoomControls(true);
 		view.setMultiTouchControls(true);
 
 		view.getController().setZoom(mPrefs.getInt(PREFERENCE_ZOOM_LEVEL, 1));
 		view.scrollTo(mPrefs.getInt(PREFERENCE_SCROLL_X, 0), mPrefs.getInt(PREFERENCE_SCROLL_Y, 0));
 
-		mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(getContext()), view, mResourceProxy);
+		mLocationOverlay = new MyLocationNewOverlay(view);
 		view.getOverlayManager().add(mLocationOverlay);
 
-		mLongClickableOverlay = new LongClickableOverlay(getContext(), this);
+		mLongClickableOverlay = new LongClickableOverlay(this);
 		if (isPrecachingEnabled()) {
 			view.getOverlayManager().add(mLongClickableOverlay);
 		}
@@ -127,8 +120,7 @@ public class MapFragment extends Fragment implements MapListener,
 			return true;
 		} else if (item.getItemId() == R.id.maps__menu_mapmode) {
 			SingleChoiceDialogFragment fragment = SingleChoiceDialogFragment.newInstance(
-					getString(R.string.maps__menu_mapmode),
-					TileSourceUtil.readableTileSources(mResourceProxy), -1);
+					getString(R.string.maps__menu_mapmode), TileSourceUtil.readableTileSources(), -1);
 			fragment.show(getFragmentManager(), "mapMode");
 			return true;
 		} else {
@@ -152,7 +144,7 @@ public class MapFragment extends Fragment implements MapListener,
 		edit.putInt(PREFERENCE_SCROLL_X, view.getScrollX());
 		edit.putInt(PREFERENCE_SCROLL_Y, view.getScrollY());
 		edit.putInt(PREFERENCE_ZOOM_LEVEL, view.getZoomLevel());
-		edit.apply();
+		edit.commit();
 
 		super.onPause();
 	}

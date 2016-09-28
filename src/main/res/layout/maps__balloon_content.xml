@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/maps__balloon_main_layout"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@drawable/maps__balloon_overlay_bg_selector"
-    android:duplicateParentState="true"
-    android:minWidth="200dip"
-    android:orientation="horizontal"
-    android:paddingBottom="35dip"
-    android:paddingLeft="10dip"
-    android:paddingRight="0dip"
-    android:paddingTop="0dip">
+              android:id="@+id/maps__balloon_main_layout"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@drawable/maps__balloon_overlay_bg_selector"
+              android:duplicateParentState="true"
+              android:minWidth="200dip"
+              android:orientation="horizontal"
+              android:paddingBottom="35dip"
+              android:paddingLeft="10dip"
+              android:paddingRight="0dip"
+              android:paddingTop="0dip">
 
     <LinearLayout
         android:id="@+id/maps__balloon_inner_layout"
@@ -25,31 +25,32 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/maps__balloon_item_snippet"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="#000000"
-            android:textSize="12sp" />
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/maps__balloon_item_readmore"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="#7C2811"
-            android:textSize="12sp" />
+            android:textSize="12sp"/>
     </LinearLayout>
 
     <ImageView
         android:id="@+id/maps__close_img_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@null"
         android:paddingBottom="10dip"
         android:paddingLeft="10dip"
         android:paddingRight="8dip"
         android:paddingTop="8dip"
-        android:src="@drawable/maps__balloon_overlay_close" />
+        android:src="@drawable/maps__balloon_overlay_close"/>
 
 </LinearLayout>

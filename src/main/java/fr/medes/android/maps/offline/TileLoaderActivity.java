@@ -146,7 +146,6 @@ public class TileLoaderActivity extends AppCompatActivity implements OnClickList
 			finish();
 		}
 
-		;
 	};
 
 }

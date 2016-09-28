@@ -45,7 +45,7 @@ public class PreCacheMap extends MapActivity implements MapFragment.Callback {
 		Cursor innerCursor = getContentResolver().query(PreCache.URI, null, null, null, null);
 		PreCacheCursor c = new PreCacheCursor(innerCursor);
 		for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-			BoundingBoxOverlay bbo = new BoundingBoxOverlay(this);
+			BoundingBoxOverlay bbo = new BoundingBoxOverlay();
 			bbo.setBounds(c.getNorth(), c.getEast(), c.getSouth(), c.getWest());
 			mMapFragment.getMapView().getOverlayManager().add(bbo);
 		}

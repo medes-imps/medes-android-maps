@@ -16,7 +16,6 @@ import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
-import org.osmdroid.util.ResourceProxyImpl;
 
 import fr.medes.android.app.WakefulIntentService;
 import fr.medes.android.maps.MapsConstants;
@@ -90,7 +89,7 @@ public class TileLoaderService extends WakefulIntentService implements OnTileLoa
 		mLoaderManager = new TileLoaderManager(source, east, north, south, west, zoomMin, zoomMax);
 		mTilesToDownload = mLoaderManager.getTilesToDownloadCount();
 
-		showDownloadNotification(source.localizedName(new ResourceProxyImpl(this)));
+		showDownloadNotification(source.name());
 		publishProgress(0);
 
 		mLoaderManager.setOnTileLoadedListener(this);
@@ -181,11 +180,7 @@ public class TileLoaderService extends WakefulIntentService implements OnTileLoa
 		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
 		stackBuilder.addParentStack(TileLoaderActivity.class);
 		stackBuilder.addNextIntent(resultIntent);
-		PendingIntent resultPendingIntent =
-				stackBuilder.getPendingIntent(
-						0,
-						PendingIntent.FLAG_UPDATE_CURRENT
-				);
+		PendingIntent contentIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		Intent cancelintent = new Intent(ACTION_CANCEL);
 		PendingIntent cancelPendingIntent = PendingIntent.getBroadcast(this, 0, cancelintent, 0);
@@ -196,7 +191,7 @@ public class TileLoaderService extends WakefulIntentService implements OnTileLoa
 				.setContentInfo(null)
 				.setProgress(mTilesToDownload, 0, false)
 				.setSmallIcon(R.drawable.ic_map_white)
-				.setContentIntent(resultPendingIntent)
+				.setContentIntent(contentIntent)
 				.addAction(android.R.drawable.ic_menu_close_clear_cancel, getString(android.R.string.cancel), cancelPendingIntent)
 				.setOngoing(true);
 

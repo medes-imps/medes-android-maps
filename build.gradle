@@ -1,12 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
 }
 
 dependencies {
     compile project(':imogene.android:medes-android_lib')
-    compile 'org.osmdroid:osmdroid-android:4.3'
-    compile 'org.slf4j:slf4j-simple:1.6.1'
+    compile 'org.osmdroid:osmdroid-android:5.4.1:release@aar'
 }
