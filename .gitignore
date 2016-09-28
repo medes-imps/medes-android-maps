@@ -1,6 +1,7 @@
-/gen
-/assets
-/bin
-/.settings
 /build
-medes-android-maps_lib.iml
+.gradle/
+.idea/
+libraries/libraries.iml
+local.properties
+medes-android-maps.iml
+

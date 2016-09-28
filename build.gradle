@@ -1,11 +1,31 @@
 apply plugin: 'com.android.library'
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.0'
+    }
+}
+
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.2"
+
+    defaultConfig {
+        minSdkVersion 9
+        versionCode 1
+        versionName '1.0'
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
 }
 
 dependencies {
-    compile project(':imogene.android:medes-android_lib')
+    compile project(':libraries:medes-android-utils')
     compile 'org.osmdroid:osmdroid-android:5.4.1:release@aar'
 }
