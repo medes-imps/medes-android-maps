@@ -144,7 +144,7 @@ public class MapFragment extends Fragment implements MapListener,
 		edit.putInt(PREFERENCE_SCROLL_X, view.getScrollX());
 		edit.putInt(PREFERENCE_SCROLL_Y, view.getScrollY());
 		edit.putInt(PREFERENCE_ZOOM_LEVEL, view.getZoomLevel());
-		edit.commit();
+		edit.apply();
 
 		super.onPause();
 	}
