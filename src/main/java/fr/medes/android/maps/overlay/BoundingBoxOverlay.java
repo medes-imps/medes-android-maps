@@ -45,7 +45,7 @@ public class BoundingBoxOverlay extends Overlay {
 	}
 
 	@Override
-	protected void draw(Canvas canvas, MapView mapView, boolean shadow) {
+	public void draw(Canvas canvas, MapView mapView, boolean shadow) {
 		Projection pj = mapView.getProjection();
 		pj.toPixels(new GeoPoint(mNorth, mEast), reuse);
 		rect.top = reuse.y;

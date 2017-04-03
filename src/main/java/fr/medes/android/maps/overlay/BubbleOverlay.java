@@ -60,7 +60,7 @@ public class BubbleOverlay extends Overlay {
 	}
 
 	@Override
-	protected void draw(Canvas canvas, MapView mapView, boolean shadow) {
+	public void draw(Canvas canvas, MapView mapView, boolean shadow) {
 		assignParent(mapView);
 		drawMapLocations(canvas, mapView);
 	}

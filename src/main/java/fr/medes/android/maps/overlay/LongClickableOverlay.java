@@ -25,7 +25,7 @@ public class LongClickableOverlay extends Overlay {
 	}
 
 	@Override
-	protected void draw(Canvas canvas, MapView mapView, boolean shadow) {
+	public void draw(Canvas canvas, MapView mapView, boolean shadow) {
 		// nothing to draw
 	}
 

@@ -1,5 +1,6 @@
 package fr.medes.android.maps.offline;
 
+import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.MapTile;
 import org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants;
 import org.osmdroid.tileprovider.tilesource.ITileSource;
@@ -50,13 +51,13 @@ public class TileUtils {
 	}
 
 	public static boolean contains(final ITileSource source, final MapTile mapTile) {
-		final File file = new File(OpenStreetMapTileProviderConstants.TILE_PATH_BASE,
+		final File file = new File(Configuration.getInstance().getOsmdroidTileCache(),
 				source.getTileRelativeFilenameString(mapTile) + OpenStreetMapTileProviderConstants.TILE_PATH_EXTENSION);
 		return file.exists();
 	}
 
 	public static boolean saveFile(final ITileSource source, final MapTile tile, final InputStream is) {
-		final File file = new File(OpenStreetMapTileProviderConstants.TILE_PATH_BASE,
+		final File file = new File(Configuration.getInstance().getOsmdroidTileCache(),
 				source.getTileRelativeFilenameString(tile) + OpenStreetMapTileProviderConstants.TILE_PATH_EXTENSION);
 
 		final File parent = file.getParentFile();
