@@ -32,4 +32,14 @@
     <string name="maps__offline_text2">"N %1$.2f E %2$.2f S %3$.2f W %4$.2f"</string>
     <string name="maps__offline_settings">Pre-cache settings</string>
 
+    <!-- Precache settings -->
+    <string name="maps__preferences">Cache Settings</string>
+    <string name="maps__preferences_caching_title">Automatic caching</string>
+    <string name="maps__preferences_caching_summary">Automatic caching of map areas</string>
+    <string name="maps__preferences_area_title">Precached map areas</string>
+    <string name="maps__preferences_area_summary">{0,choice,0#No precached map area|1#One precached map area|1&lt;{0} precached map areas}</string>
+    <string name="maps__preferences_clear_title">Clear map tile cache</string>
+    <string name="maps__preferences_clear_summary">Current cache size is %1$s. To clear user data use the system application settings</string>
+    <string name="maps__preferences_computing_summary">Computing&#8230;</string>
+
 </resources>

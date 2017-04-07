@@ -32,4 +32,14 @@
     <string name="maps__offline_text2">N %1$.2f E %2$.2f S %3$.2f O %4$.2f</string>
     <string name="maps__offline_settings">Paramètres du cache</string>
 
+    <!-- Precache settings -->
+    <string name="maps__preferences">Paramètres du cache</string>
+    <string name="maps__preferences_caching_title">Cache automatique</string>
+    <string name="maps__preferences_caching_summary">Mise en cache automatique des cartes</string>
+    <string name="maps__preferences_area_title">Cartes en cache</string>
+    <string name="maps__preferences_area_summary">{0,choice,0#Pas de carte en cache|1#Une carte en cache|1&lt;{0} cartes en cache}</string>
+    <string name="maps__preferences_clear_title">Effacer le cache</string>
+    <string name="maps__preferences_clear_summary">La taille du cache est %1$s. Pour effacer les données utiliser les paramètres de l\'application.</string>
+    <string name="maps__preferences_computing_summary">Calcul&#8230;</string>
+
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Precache settings keys -->
+    <string name="maps__pref_automatic_cache" translatable="false">pref_map_automatic_cache</string>
+    <string name="maps__pref_clear_cache" translatable="false">pref_map_clear_cache</string>
+    <string name="maps__pref_precache_area" translatable="false">pref_map_precache_area</string>
+
+</resources>

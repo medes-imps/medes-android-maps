@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceCategory xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:key="@string/maps__pref_automatic_cache"
+        android:persistent="false"
+        android:summary="@string/maps__preferences_caching_summary"
+        android:title="@string/maps__preferences_caching_title"/>
+
+    <Preference
+        android:key="@string/maps__pref_clear_cache"
+        android:persistent="false"
+        android:summary="@string/maps__preferences_computing_summary"
+        android:title="@string/maps__preferences_clear_title"/>
+
+    <Preference
+        android:key="@string/maps__pref_precache_area"
+        android:persistent="false"
+        android:summary="@string/maps__preferences_computing_summary"
+        android:title="@string/maps__preferences_area_title">
+
+        <intent
+            android:targetClass="fr.medes.android.maps.app.PreCacheListActivity"
+            />
+    </Preference>
+
+</PreferenceCategory>
