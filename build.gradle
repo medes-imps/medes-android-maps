@@ -6,7 +6,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.1'
+        classpath 'com.android.tools.build:gradle:2.3.2'
     }
 }
 
@@ -30,7 +30,7 @@ repositories {
 }
 
 dependencies {
-    compile 'fr.medes:medes-android-utils:1.0.0'
+    compile 'fr.medes:medes-android-utils:1.0.1'
     compile 'org.osmdroid:osmdroid-android:5.6.4'
 }
 
@@ -40,7 +40,7 @@ uploadArchives {
 
             pom.groupId = 'fr.medes'
             pom.artifactId = 'medes-android-maps'
-            pom.version = '1.0.0'
+            pom.version = '1.0.1'
 
             repository(
                     url: "${NEXUS_URL}/content/repositories/releases") {
