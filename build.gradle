@@ -30,7 +30,7 @@ repositories {
 }
 
 dependencies {
-    compile 'fr.medes:medes-android-utils:1.0.2'
+    compile 'fr.medes:medes-android-utils:1.0.3'
     compile 'org.osmdroid:osmdroid-android:5.6.4'
 }
 
@@ -63,7 +63,7 @@ uploadArchives {
 
             pom.groupId = 'fr.medes'
             pom.artifactId = 'medes-android-maps'
-            pom.version = '1.0.2'
+            pom.version = '1.0.3'
 
             repository(
                     url: "${NEXUS_URL}/content/repositories/releases") {
