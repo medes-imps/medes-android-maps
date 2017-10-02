@@ -19,7 +19,7 @@ import fr.medes.android.maps.database.sqlite.MapsOpenHelper;
 
 public class MapsContentProvider extends ContentProvider {
 
-	public static final String AUTHORITY = (String) BuildConfigHelper.getBuildConfigValue("AUTHORITY_MAPS_PROVIDER");
+	public static final String AUTHORITY = BuildConfigHelper.getBuildConfigValue("AUTHORITY_MAPS_PROVIDER");
 
 	private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
